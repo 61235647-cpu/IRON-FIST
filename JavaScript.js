@@ -57,31 +57,47 @@ function area(){return $("NIVEL_01")?.querySelector(".Contenedor");}
 function ocultar(e){if(e){e.style.transition="none";e.style.left="-12%";e.dataset.tocado="0";}}
 function lanzar(e,delay=0){if(!e)return;setTimeout(()=>{if(!estado.jugando||estado.pausado||estado.terminado)return;e.dataset.tocado="0";e.style.top=Math.max(7,Math.random()*78)+"%";e.style.left="-12%";e.style.transition="left 5.2s linear";requestAnimationFrame(()=>e.style.left="78%");},delay);}
 
+function lanzar(e,delay=0){if(!e)return;setTimeout(()=>{if(!estado.jugando||estado.pausado||estado.terminado)return;e.dataset.tocado="0";e.style.top=Math.max(7,Math.random()*78)+"%";e.style.transition="none";e.style.left="-12%";e.dataset.progreso="0";animarMeteorito(e,0);},delay);}
+function animarMeteorito(e,progresoInicial=0){
+  if(!e)return;
+  cancelAnimationFrame(e._ironFistFrame);
+  const duracion=5.2*1000;
+  const ancho=e.parentElement?.getBoundingClientRect().width||1;
+  const inicio=performance.now()-(Math.max(0,Math.min(1,progresoInicial))*duracion);
+  function frame(ahora){
+    if(!estado.jugando||estado.terminado)return;
+    if(estado.pausado){
+      e.dataset.progreso=String(Math.max(0,Math.min(1,(ahora-inicio)/duracion)));
+      e._ironFistFrame=requestAnimationFrame(frame);
+      return;
+    }
+    const progreso=Math.max(0,Math.min(1,(ahora-inicio)/duracion));
+    e.dataset.progreso=String(progreso);
+    e.style.left=(-12+(78+12)*progreso)+"%";
+    if(progreso<1)e._ironFistFrame=requestAnimationFrame(frame);
+  }
+  e._ironFistFrame=requestAnimationFrame(frame);
+}
+
 function congelarMeteoritos(ids){
   ids.forEach(id=>{
     const e=$(id);
     if(!e||e.dataset.tocado==="1")return;
+    cancelAnimationFrame(e._ironFistFrame);
     const left=e.getBoundingClientRect().left;
     const parent=e.parentElement?.getBoundingClientRect();
     if(!parent)return;
-    const relative=left-parent.left;
+    const progreso=Math.max(0,Math.min(1,(left-parent.left)/(parent.width||1)));
+    e.dataset.progreso=String(progreso);
     e.style.transition="none";
-    e.style.left=relative+"px";
-    void e.offsetWidth;
-    e.dataset.pausadoLeft=relative+"px";
+    e.style.left=(-12+(78+12)*progreso)+"%";
   });
 }
 function reanudarMeteoritos(ids){
   ids.forEach(id=>{
     const e=$(id);
     if(!e||e.dataset.tocado==="1")return;
-    const left=parseFloat(e.dataset.pausadoLeft||e.style.left)||0;
-    const area=e.parentElement?.getBoundingClientRect();
-    if(!area)return;
-    const target=area.width*.78;
-    const remaining=Math.max(.45,((target-left)/(area.width*.78))*5.2);
-    e.style.transition="left "+remaining+"s linear";
-    requestAnimationFrame(()=>e.style.left="78%");
+    animarMeteorito(e,parseFloat(e.dataset.progreso||"0"));
   });
 }
 function iniciarMeteoritos(){meteoritos.forEach((id,i)=>{const e=$(id);if(!e)return;ocultar(e);lanzar(e,i*1200);});}
