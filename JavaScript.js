@@ -82,13 +82,14 @@ function cuenta(id,callback){const box=$(id),sp=box?.querySelector("span");if(!b
 function conectar(id){const e=$(id);if(e)e.addEventListener("pointerdown",()=>golpear(id));}
 function configurar(){barra("Puntaje","BarraProgresoLvl1","ProgresoInternoLvl1");$("Play")?.addEventListener("click",()=>cuenta("Contenedor_contador",iniciarNivel1));$("Pause")?.addEventListener("click",pausarNivel1);$("Reiniciar")?.addEventListener("click",reiniciarNivel1);meteoritos.forEach(conectar);$("NEXT")?.addEventListener("click",()=>{if($("NIVEL_01").style.display!=="none"&&estado.terminado){$("NIVEL_01").style.display="none";$("NIVEL_02").style.display="flex";$("NIVEL3").style.display="none";$("NEXT").style.display="none";window.prepararNivel2?.();}else if($("NIVEL_02").style.display!=="none"&&window.nivel2Terminado?.()){$("NIVEL_02").style.display="none";$("NIVEL3").style.display="flex";$("NEXT").style.display="none";window.prepararNivel3?.();}});$("NEXT").style.display="none";actualizarHUD();}
 window.iniciarNivel1=iniciarNivel1;
+window.nivel1Terminado=()=>estado.terminado;
 document.addEventListener("DOMContentLoaded",()=>{configurarNarracion();configurar();});
 })();
 /* Navegacion robusta entre niveles */
 function avanzarNivelSeguro(){
  const a=document.getElementById("NIVEL_01"),b=document.getElementById("NIVEL_02"),c=document.getElementById("NIVEL3"),n=document.getElementById("NEXT");
  if(!a||!b||!c||!n)return;
- if(a.style.display!=="none" && estado.terminado){
+ if(a.style.display!=="none" && window.nivel1Terminado?.()){
   a.style.display="none";b.style.display="flex";c.style.display="none";n.style.display="none";n.style.pointerEvents="none";window.prepararNivel2?.();return;
  }
  if(b.style.display!=="none" && window.nivel2Terminado?.()){
