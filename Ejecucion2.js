@@ -1,7 +1,7 @@
 /* IRON FIST — Nivel 2 */
 (() => {
 "use strict";
-const $=id=>document.getElementById(id),play=id=>{const a=$(id);if(a){if(id==="Fondo_Ciberpunk")a.volume=0.12;a.play().catch(()=>{})}},pause=id=>{$(id)?.pause()};
+const $=id=>document.getElementById(id),play=id=>{if(id==="Fondo_Ciberpunk"){window.ironFistSpaceMusic?.start();return;}const a=$(id);if(a)a.play().catch(()=>{});},pause=id=>{if(id==="Fondo_Ciberpunk"){window.ironFistSpaceMusic?.pause();return;}$(id)?.pause()};
 const ids=["Meteioritolvl2","Meteiorito2lvl2","Meteiorito3lvl2"];
 let s={tiempo:60,puntos:0,jugando:false,pausado:false,terminado:false,timer:null,impact:null};
 function hud(){if($("Tiempolvl2"))$("Tiempolvl2").textContent=s.tiempo;if($("Puntajelvl2"))$("Puntajelvl2").textContent=s.puntos+" / 10";const p=$("Puntajelvl2")?.parentElement?.querySelector(".ProgresoInternoLvl2");if(p)p.style.width=(s.puntos/10*100)+"%";}
