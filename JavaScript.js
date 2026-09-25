@@ -61,7 +61,7 @@ function configurar(){
  $("Pause")?.addEventListener("click",pausarNivel1);
  meteoritos.forEach(conectar);
  $("NEXT")?.addEventListener("click",()=>{
-   if(estado.terminado){
+   if($("NIVEL_01").style.display!=="none" && estado.terminado){
      $("NIVEL_01").style.display="none";$("NIVEL_02").style.display="flex";$("NIVEL3").style.display="none";$("NEXT").style.display="none";window.prepararNivel2?.();
    }else if($("NIVEL_02").style.display!=="none" && window.nivel2Terminado?.()){
      $("NIVEL_02").style.display="none";$("NIVEL3").style.display="flex";$("NEXT").style.display="none";window.prepararNivel3?.();
