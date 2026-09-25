@@ -222,3 +222,8 @@ body{
 #GanastePantallaLvL2{pointer-events:none!important}
 #NEXT{z-index:99999!important;pointer-events:auto!important;cursor:pointer!important;touch-action:manipulation!important}
 #NEXT *{pointer-events:none!important}
+
+/* FIX DEFINITIVO: SIGUIENTE NIVEL siempre queda por encima de las pantallas */
+#NEXT{position:fixed!important;right:18px!important;bottom:14px!important;z-index:2147483647!important;pointer-events:auto!important;touch-action:manipulation!important;cursor:pointer!important;}
+#NEXT,#NEXT *{user-select:none!important;}
+@media(max-width:760px){#NEXT{right:8px!important;bottom:8px!important;}}
