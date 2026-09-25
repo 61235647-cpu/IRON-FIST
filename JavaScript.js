@@ -2,8 +2,48 @@
 (() => {
 "use strict";
 const $=id=>document.getElementById(id);
-const play=id=>{const a=$(id);if(a){if(id==="Fondo_Ciberpunk")a.volume=0.12;a.play().catch(()=>{});}};
-const pause=id=>{const a=$(id);if(a)a.pause();};
+const spaceMusic=(()=>{
+  let ctx=null, master=null, timer=null, step=0, running=false;
+  const notes=[220,277.18,329.63,293.66,246.94,329.63,369.99,293.66,220,246.94,293.66,369.99,329.63,277.18,246.94,196];
+  function tone(freq,dur,when,type="sawtooth",gain=0.035){
+    if(!ctx||!master)return;
+    const o=ctx.createOscillator(), g=ctx.createGain();
+    o.type=type; o.frequency.value=freq;
+    g.gain.setValueAtTime(0.0001,when);
+    g.gain.exponentialRampToValueAtTime(gain,when+0.025);
+    g.gain.exponentialRampToValueAtTime(0.0001,when+dur);
+    o.connect(g); g.connect(master); o.start(when); o.stop(when+dur+0.03);
+  }
+  function beat(){
+    if(!running||!ctx)return;
+    const now=ctx.currentTime, n=notes[step%notes.length];
+    tone(n,0.42,now,"sawtooth",0.028);
+    tone(n/2,0.55,now,"triangle",0.018);
+    if(step%4===0) tone(n*2,0.16,now,"square",0.012);
+    step++;
+    timer=setTimeout(beat,420);
+  }
+  return {
+    start(){
+      if(running)return;
+      const A=window.AudioContext||window.webkitAudioContext;
+      if(!A)return;
+      if(!ctx){ctx=new A();master=ctx.createGain();master.gain.value=0.55;master.connect(ctx.destination);}
+      ctx.resume(); running=true; step=0; beat();
+    },
+    pause(){running=false;if(timer)clearTimeout(timer);if(ctx)ctx.suspend().catch(()=>{});},
+    stop(){running=false;if(timer)clearTimeout(timer);if(ctx)ctx.suspend().catch(()=>{});}
+  };
+})();
+window.ironFistSpaceMusic=spaceMusic;
+const play=id=>{
+  if(id==="Fondo_Ciberpunk"){spaceMusic.start();return;}
+  const a=$(id);if(a)a.play().catch(()=>{});
+};
+const pause=id=>{
+  if(id==="Fondo_Ciberpunk"){spaceMusic.pause();return;}
+  const a=$(id);if(a)a.pause();
+};
 window.Mover=()=>{$("Seccion_01").style.display="none";$("Reglas").style.display="grid";};
 window.Mover_2=()=>{$("Reglas").style.display="none";$("Seccion_2").style.display="block";};
 window.Mover_3=()=>{$("Seccion_2").style.display="none";$("Seccion_Juego").style.display="flex";$("NIVEL_01").style.display="flex";$("NIVEL_02").style.display="none";$("NIVEL3").style.display="none";};
