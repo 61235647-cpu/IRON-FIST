@@ -6,8 +6,8 @@ const ids=["Meteoritolvl3","Meteorito2lvl3","Meteorito3lvl3","Meteorito4lvl3"];
 let s={tiempo:50,puntos:0,jugando:false,pausado:false,terminado:false,timer:null,impact:null};
 function hud(){if($("Tiempolvl3"))$("Tiempolvl3").textContent=s.tiempo;if($("Puntajelvl3"))$("Puntajelvl3").textContent=s.puntos+" / 5";const p=$("Puntajelvl3")?.parentElement?.querySelector(".ProgresoInternoLvl3");if(p)p.style.width=(s.puntos/5*100)+"%";}
 function barra(){const box=$("Puntajelvl3");if(box&&!box.querySelector(".BarraProgresoLvl3")){const b=document.createElement("div");b.className="BarraProgresoLvl3";b.innerHTML='<div class="ProgresoInternoLvl3"></div>';box.style.position="relative";box.appendChild(b);}}
-function ocultar(e){if(e){e.style.transition="none";e.style.left="-12%";e.dataset.tocado="0";}}
-function lanzar(e,delay=0){if(!e)return;setTimeout(()=>{if(!s.jugando||s.pausado||s.terminado)return;e.dataset.tocado="0";e.style.top=Math.max(6,Math.random()*80)+"%";e.style.left="-12%";e.style.transition="left 3.3s linear";requestAnimationFrame(()=>e.style.left="78%");},delay);}
+function ocultar(e){if(e){e.style.transition="none";e.style.opacity="0";e.style.visibility="hidden";e.style.left="-12%";e.dataset.tocado="0";}}
+function lanzar(e,delay=0){if(!e)return;setTimeout(()=>{if(!s.jugando||s.pausado||s.terminado)return;e.dataset.tocado="0";e.style.top=Math.max(6,Math.random()*80)+"%";e.style.left="-12%";e.style.transition="none";e.style.opacity="1";e.style.visibility="visible";requestAnimationFrame(()=>{e.style.transition="left 3.3s linear";e.style.left="78%";});},delay);}
 function congelarMeteoritos(ids){
   ids.forEach(id=>{
     const e=$(id);
