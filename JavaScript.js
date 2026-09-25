@@ -61,7 +61,7 @@ function congelarMeteoritos(ids){
   ids.forEach(id=>{const e=$(id);if(!e||e.dataset.tocado==="1")return;const left=getComputedStyle(e).left;e.style.transition="none";e.style.left=left;e.dataset.pausadoLeft=left;});
 }
 function reanudarMeteoritos(ids){
-  ids.forEach(id=>{const e=$(id);if(!e||e.dataset.tocado==="1")return;const left=parseFloat(getComputedStyle(e).left)||0;const area=e.parentElement?.getBoundingClientRect();if(!area)return;const target=area.width*.78;const remaining=Math.max(.45,(target-left)/(area.width*.78)*4.2);e.style.transition="left "+remaining+"s linear";requestAnimationFrame(()=>e.style.left="78%");});
+  ids.forEach(id=>{const e=$(id);if(!e||e.dataset.tocado==="1")return;const left=parseFloat(getComputedStyle(e).left)||0;const area=e.parentElement?.getBoundingClientRect();if(!area)return;const target=area.width*.78;const remaining=Math.max(.45,(target-left)/(area.width*.78)*5.2);e.style.transition="left "+remaining+"s linear";requestAnimationFrame(()=>e.style.left="78%");});
 }
 function iniciarMeteoritos(){meteoritos.forEach((id,i)=>{const e=$(id);if(!e)return;ocultar(e);lanzar(e,i*1200);});}
 function detenerMeteoritos(){meteoritos.forEach(id=>{const e=$(id);if(e)e.dataset.tocado="1";});}
