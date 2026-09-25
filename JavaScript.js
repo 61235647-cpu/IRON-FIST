@@ -84,3 +84,18 @@ function configurar(){barra("Puntaje","BarraProgresoLvl1","ProgresoInternoLvl1")
 window.iniciarNivel1=iniciarNivel1;
 document.addEventListener("DOMContentLoaded",()=>{configurarNarracion();configurar();});
 })();
+/* Navegacion robusta entre niveles */
+function avanzarNivelSeguro(){
+ const a=document.getElementById("NIVEL_01"),b=document.getElementById("NIVEL_02"),c=document.getElementById("NIVEL3"),n=document.getElementById("NEXT");
+ if(!a||!b||!c||!n)return;
+ if(a.style.display!=="none" && estado.terminado){
+  a.style.display="none";b.style.display="flex";c.style.display="none";n.style.display="none";n.style.pointerEvents="none";window.prepararNivel2?.();return;
+ }
+ if(b.style.display!=="none" && window.nivel2Terminado?.()){
+  b.style.display="none";c.style.display="flex";n.style.display="none";n.style.pointerEvents="none";window.prepararNivel3?.();
+ }
+}
+window.addEventListener("DOMContentLoaded",()=>{
+ const n=document.getElementById("NEXT");
+ if(n){n.addEventListener("click",avanzarNivelSeguro);n.addEventListener("pointerup",avanzarNivelSeguro);}
+});
