@@ -103,5 +103,9 @@ function avanzarNivelSeguro(){
 window.avanzarNivelSeguro=avanzarNivelSeguro;
 document.addEventListener("DOMContentLoaded",()=>{
  const n=document.getElementById("NEXT");
- if(n)n.addEventListener("click",(e)=>{e.preventDefault();e.stopPropagation();avanzarNivelSeguro();});
+ if(!n)return;
+ // Sacamos el botón de cualquier contenedor que pueda bloquear sus clics.
+ if(n.parentElement!==document.body)document.body.appendChild(n);
+ n.addEventListener("click",(e)=>{e.preventDefault();e.stopPropagation();avanzarNivelSeguro();});
+ n.addEventListener("pointerup",(e)=>{e.preventDefault();e.stopPropagation();});
 });
