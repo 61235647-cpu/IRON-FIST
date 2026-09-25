@@ -2,7 +2,7 @@
 (() => {
 "use strict";
 const $=id=>document.getElementById(id);
-const play=id=>{const a=$(id);if(a)a.play().catch(()=>{});};
+const play=id=>{const a=$(id);if(a){if(id==="Fondo_Ciberpunk")a.volume=0.12;a.play().catch(()=>{});}};
 const pause=id=>{const a=$(id);if(a)a.pause();};
 window.Mover=()=>{$("Seccion_01").style.display="none";$("Reglas").style.display="grid";};
 window.Mover_2=()=>{$("Reglas").style.display="none";$("Seccion_2").style.display="block";};
