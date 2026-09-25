@@ -7,10 +7,45 @@ let s={tiempo:50,puntos:0,jugando:false,pausado:false,terminado:false,timer:null
 function hud(){if($("Tiempolvl3"))$("Tiempolvl3").textContent=s.tiempo;if($("Puntajelvl3"))$("Puntajelvl3").textContent=s.puntos+" / 5";const p=$("Puntajelvl3")?.parentElement?.querySelector(".ProgresoInternoLvl3");if(p)p.style.width=(s.puntos/5*100)+"%";}
 function barra(){const box=$("Puntajelvl3");if(box&&!box.querySelector(".BarraProgresoLvl3")){const b=document.createElement("div");b.className="BarraProgresoLvl3";b.innerHTML='<div class="ProgresoInternoLvl3"></div>';box.style.position="relative";box.appendChild(b);}}
 function ocultar(e){if(e){e.style.transition="none";e.style.left="-12%";e.dataset.tocado="0";}}
-function lanzar(e,delay=0){if(!e)return;setTimeout(()=>{if(!s.jugando||s.pausado||s.terminado)return;e.dataset.tocado="0";e.style.top=Math.max(6,Math.random()*80)+"%";e.style.left="-12%";e.style.transition="left 3.3s linear";requestAnimationFrame(()=>e.style.left="78%");},delay);}
+function lanzar(e,delay=0){if(!e)return;setTimeout(()=>{if(!s.jugando||s.pausado||s.terminado)return;e.dataset.tocado="0";e.style.top=Math.max(6,Math.random()*80)+"%";e.style.transition="none";e.dataset.progreso="0";animarMeteorito(e,0);},delay);}
+function animarMeteorito(e,progresoInicial=0){
+  if(!e)return;
+  cancelAnimationFrame(e._ironFistFrame);
+  const duracion=3.3*1000;
+  const inicio=performance.now()-(Math.max(0,Math.min(1,progresoInicial))*duracion);
+  function frame(ahora){
+    if(!s.jugando||s.terminado)return;
+    const progreso=Math.max(0,Math.min(1,(ahora-inicio)/duracion));
+    if(!s.pausado){
+      e.dataset.progreso=String(progreso);
+      e.style.left=(-12+90*progreso)+"%";
+    }
+    if(progreso<1)e._ironFistFrame=requestAnimationFrame(frame);
+  }
+  e._ironFistFrame=requestAnimationFrame(frame);
+}
 
-function congelarMeteoritos(ids){ids.forEach(id=>{const e=$(id);if(!e||e.dataset.tocado==="1")return;const left=getComputedStyle(e).left;e.style.transition="none";e.style.left=left;});}
-function reanudarMeteoritos(ids){ids.forEach(id=>{const e=$(id);if(!e||e.dataset.tocado==="1")return;const left=parseFloat(getComputedStyle(e).left)||0;const a=e.parentElement?.getBoundingClientRect();if(!a)return;const remaining=Math.max(.35,(a.width*.78-left)/(a.width*.78)*3.3);e.style.transition="left "+remaining+"s linear";requestAnimationFrame(()=>e.style.left="78%");});}
+function congelarMeteoritos(ids){
+  ids.forEach(id=>{
+    const e=$(id);
+    if(!e||e.dataset.tocado==="1")return;
+    cancelAnimationFrame(e._ironFistFrame);
+    const left=e.getBoundingClientRect().left;
+    const parent=e.parentElement?.getBoundingClientRect();
+    if(!parent)return;
+    const progreso=Math.max(0,Math.min(1,(left-parent.left)/(parent.width||1)));
+    e.dataset.progreso=String(progreso);
+    e.style.transition="none";
+    e.style.left=(-12+90*progreso)+"%";
+  });
+}
+function reanudarMeteoritos(ids){
+  ids.forEach(id=>{
+    const e=$(id);
+    if(!e||e.dataset.tocado==="1")return;
+    animarMeteorito(e,parseFloat(e.dataset.progreso||"0"));
+  });
+}
 function iniciarMeteoritos(){ids.forEach((id,i)=>{const e=$(id);if(e){ocultar(e);lanzar(e,i*650);}});}
 function detener(){ids.forEach(id=>{const e=$(id);if(e)e.dataset.tocado="1";});}
 function reiniciar(m){s.tiempo=50;s.puntos=0;hud();ids.forEach(id=>ocultar($(id)));play("Perdiste_sound");if(window.Swal)Swal.fire({title:"¡Defensa fallida!",text:m+" La ronda se reiniciará.",icon:"warning",confirmButtonText:"Continuar",background:"#07101c",color:"#fff"});setTimeout(()=>{if(s.jugando&&!s.terminado)iniciarMeteoritos();},900);}
