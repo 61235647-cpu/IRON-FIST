@@ -58,10 +58,31 @@ function ocultar(e){if(e){e.style.transition="none";e.style.left="-12%";e.datase
 function lanzar(e,delay=0){if(!e)return;setTimeout(()=>{if(!estado.jugando||estado.pausado||estado.terminado)return;e.dataset.tocado="0";e.style.top=Math.max(7,Math.random()*78)+"%";e.style.left="-12%";e.style.transition="left 5.2s linear";requestAnimationFrame(()=>e.style.left="78%");},delay);}
 
 function congelarMeteoritos(ids){
-  ids.forEach(id=>{const e=$(id);if(!e||e.dataset.tocado==="1")return;const left=getComputedStyle(e).left;e.style.transition="none";e.style.left=left;e.dataset.pausadoLeft=left;});
+  ids.forEach(id=>{
+    const e=$(id);
+    if(!e||e.dataset.tocado==="1")return;
+    const left=e.getBoundingClientRect().left;
+    const parent=e.parentElement?.getBoundingClientRect();
+    if(!parent)return;
+    const relative=left-parent.left;
+    e.style.transition="none";
+    e.style.left=relative+"px";
+    void e.offsetWidth;
+    e.dataset.pausadoLeft=relative+"px";
+  });
 }
 function reanudarMeteoritos(ids){
-  ids.forEach(id=>{const e=$(id);if(!e||e.dataset.tocado==="1")return;const left=parseFloat(getComputedStyle(e).left)||0;const area=e.parentElement?.getBoundingClientRect();if(!area)return;const target=area.width*.78;const remaining=Math.max(.45,(target-left)/(area.width*.78)*5.2);e.style.transition="left "+remaining+"s linear";requestAnimationFrame(()=>e.style.left="78%");});
+  ids.forEach(id=>{
+    const e=$(id);
+    if(!e||e.dataset.tocado==="1")return;
+    const left=parseFloat(e.dataset.pausadoLeft||e.style.left)||0;
+    const area=e.parentElement?.getBoundingClientRect();
+    if(!area)return;
+    const target=area.width*.78;
+    const remaining=Math.max(.45,((target-left)/(area.width*.78))*5.2);
+    e.style.transition="left "+remaining+"s linear";
+    requestAnimationFrame(()=>e.style.left="78%");
+  });
 }
 function iniciarMeteoritos(){meteoritos.forEach((id,i)=>{const e=$(id);if(!e)return;ocultar(e);lanzar(e,i*1200);});}
 function detenerMeteoritos(){meteoritos.forEach(id=>{const e=$(id);if(e)e.dataset.tocado="1";});}
