@@ -1,7 +1,7 @@
 /* IRON FIST — Nivel 3 */
 (() => {
 "use strict";
-const $=id=>document.getElementById(id),play=id=>{$(id)?.play().catch(()=>{})},pause=id=>{$(id)?.pause()};
+const $=id=>document.getElementById(id),play=id=>{const a=$(id);if(a){if(id==="Fondo_Ciberpunk")a.volume=0.12;a.play().catch(()=>{})}},pause=id=>{$(id)?.pause()};
 const ids=["Meteoritolvl3","Meteorito2lvl3","Meteorito3lvl3","Meteorito4lvl3"];
 let s={tiempo:50,puntos:0,jugando:false,pausado:false,terminado:false,timer:null,impact:null};
 function hud(){if($("Tiempolvl3"))$("Tiempolvl3").textContent=s.tiempo;if($("Puntajelvl3"))$("Puntajelvl3").textContent=s.puntos+" / 5";const p=$("Puntajelvl3")?.parentElement?.querySelector(".ProgresoInternoLvl3");if(p)p.style.width=(s.puntos/5*100)+"%";}
