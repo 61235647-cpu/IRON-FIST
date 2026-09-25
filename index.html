@@ -24,9 +24,9 @@
 <section id="Reglas">
 <h1 class="Titulo_Reglas">ANTES DE EMPEZAR<br>LEE LAS REGLAS</h1>
 <img src="IMG/JUEGO.svg" class="Img_reglas" alt="Referencia del juego">
-<div class="Reglas_estilos" id="R1"><h3>REGLA 1</h3><p>Destruye los meteoritos antes de que lleguen a la Tierra. Cada meteorito que golpees suma puntos para completar el objetivo del nivel.</p></div>
-<div class="Reglas_estilos" id="R2"><h3>REGLA 2</h3><p>Cada nivel tiene un tiempo límite. Si el tiempo se agota, la defensa se reinicia y debes volver a intentarlo.</p></div>
-<div class="Reglas_estilos" id="R3_4"><h3>REGLA 3</h3><p>La línea roja marca la zona de impacto. Si un meteorito la alcanza, pierdes la ronda. Mantente atento y reacciona rápido.</p></div>
+<div class="Reglas_estilos" id="R1"><h3>REGLA 1</h3><p>Destruye los meteoritos antes de que lleguen a la Tierra. Golpea los meteoritos antes de que crucen la línea roja.</p></div>
+<div class="Reglas_estilos" id="R2"><h3>REGLA 2</h3><p>Completa el objetivo antes de que termine el tiempo.</p></div>
+<div class="Reglas_estilos" id="R3_4"><h3>REGLA 3</h3><p>Si un meteorito cruza la línea roja, la ronda se reinicia.</p></div>
 <div class="Listo" onclick="Mover_2()">¿ESTÁS LISTO?</div>
 </section>
 
@@ -50,7 +50,7 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 <div class="Cabezera">
 <div class="Tiempo"><h3>TIEMPO</h3><span id="Tiempo">70</span></div>
 <div class="Puntaje"><h3>PUNTAJE</h3><span id="Puntaje">0 / 15</span></div>
-<div class="Pause" id="Pause"><h3>PAUSAR / CONTINUAR</h3></div>
+<div class="Pause" id="Pause"><h3>PAUSAR / CONTINUAR</h3></div><div class="Reiniciar" id="Reiniciar"><h3>REINICIAR</h3></div>
 </div>
 <div class="Contenedor">
 <audio id="Perdiste_sound" src="Perdiste.mp3" preload="auto"></audio>
@@ -76,7 +76,7 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 <div id="Contenedor_contador"><span id="RGB"></span></div>
 </div>
 <div class="Pausa_Pantalla" id="Pausa_Pantalla"><h1 class="Mensaje_Pause">JUEGO EN PAUSA</h1></div>
-<div class="GANASTE_PANTALLA" id="GANASTE_PANTALLA"><h1>¡NIVEL 1 COMPLETADO!</h1><h3>Has defendido la Tierra y destruido los 27 meteoritos. Continúa con el siguiente nivel.</h3></div>
+<div class="GANASTE_PANTALLA" id="GANASTE_PANTALLA"><h1>¡NIVEL 1 COMPLETADO!</h1><h3>Has defendido la Tierra y destruido 15 meteoritos. Continúa con el Nivel 2.</h3></div>
 </div>
 </div>
 
@@ -84,7 +84,7 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 <div class="Cabezeralvl2">
 <div class="Tiempolvl2"><h3>TIEMPO</h3><span id="Tiempolvl2">60</span></div>
 <div class="Puntajelvl2"><h3>PUNTAJE</h3><span id="Puntajelvl2">0 / 10</span></div>
-<div class="Pauselvl2" id="Pauselvl2"><h3>PAUSAR / CONTINUAR</h3></div>
+<div class="Pauselvl2" id="Pauselvl2"><h3>PAUSAR / CONTINUAR</h3></div><div class="Reiniciarlvl2" id="Reiniciarlvl2"><h3>REINICIAR</h3></div>
 </div>
 <div class="Contenedorlvl2">
 <img src="IMG/Metiorito.svg" class="Meteioritolvl2" id="Meteioritolvl2" alt="Meteorito">
@@ -99,7 +99,7 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 <div id="Contenedor_contadorlvl2"><span id="RGBlvl2"></span></div>
 </div>
 <div class="Pausa_Pantallalvl2" id="Pausa_Pantallalvl2"><h1 class="Mensaje_Pauselvl2">JUEGO EN PAUSA</h1></div>
-<div class="GanastePantallaLvL2" id="GanastePantallaLvL2"><h1>¡NIVEL 2 COMPLETADO!</h1><h3>Has destruido 34 meteoritos. Prepárate para el Nivel 3.</h3></div>
+<div class="GanastePantallaLvL2" id="GanastePantallaLvL2"><h1>¡NIVEL 2 COMPLETADO!</h1><h3>Has destruido 10 meteoritos. Prepárate para el Nivel 3.</h3></div>
 </div>
 </section>
 
@@ -107,7 +107,7 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 <div class="Cabezeralvl3">
 <div class="Tiempolvl3"><h3>TIEMPO</h3><span id="Tiempolvl3">50</span></div>
 <div class="Puntajelvl3"><h3>PUNTAJE</h3><span id="Puntajelvl3">0 / 5</span></div>
-<div class="Pauselvl3" id="Pauselvl3"><h3>PAUSAR / CONTINUAR</h3></div>
+<div class="Pauselvl3" id="Pauselvl3"><h3>PAUSAR / CONTINUAR</h3></div><div class="Reiniciarlvl3" id="Reiniciarlvl3"><h3>REINICIAR</h3></div>
 </div>
 <div class="Contenedorlvl3">
 <img src="IMG/Metiorito.svg" class="Meteoritolvl3" id="Meteoritolvl3" alt="Meteorito">
@@ -133,10 +133,7 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 </section>
 </section>
 
-<div class="Contenedor_LVL">
-<div class="Contenedor_Reloj"><div class="Fecha"><p id="Dia_Semana"></p><p id="dia"></p><p id="mes"></p><p>del</p><p id="año"></p></div><div class="Hora"><p id="Hora"></p><p>:</p><p id="Minutos"></p><p>:</p><span id="Segundos"></span><span id="AMPM"></span></div></div>
 <div class="NEXT" id="NEXT"><h2>SIGUIENTE NIVEL <i class="fas fa-arrow-right"></i></h2></div>
-</div>
 </section>
 <script src="Ejecucion2.js"></script>
 <script src="Ejecucion3.js"></script>
