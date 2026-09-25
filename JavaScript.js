@@ -55,43 +55,19 @@ const meteoritos=["Meteiorito","Meteiorito2"];
 function actualizarHUD(){if($("Tiempo"))$("Tiempo").textContent=estado.tiempo;if($("Puntaje"))$("Puntaje").textContent=estado.puntos+" / 15";const p=$("Puntaje")?.parentElement?.querySelector(".ProgresoInternoLvl1");if(p)p.style.width=(estado.puntos/15*100)+"%";}
 function area(){return $("NIVEL_01")?.querySelector(".Contenedor");}
 function ocultar(e){if(e){e.style.transition="none";e.style.left="-12%";e.dataset.tocado="0";}}
-function lanzar(e,delay=0){if(!e)return;setTimeout(()=>{if(!estado.jugando||estado.pausado||estado.terminado)return;e.dataset.tocado="0";e.style.top=Math.max(7,Math.random()*78)+"%";e.style.transition="none";e.dataset.progreso="0";animarMeteorito(e,0);},delay);}
-function animarMeteorito(e,progresoInicial=0){
-  if(!e)return;
-  cancelAnimationFrame(e._ironFistFrame);
-  const duracion=5.2*1000;
-  const inicio=performance.now()-(Math.max(0,Math.min(1,progresoInicial))*duracion);
-  function frame(ahora){
-    if(!estado.jugando||estado.terminado)return;
-    const progreso=Math.max(0,Math.min(1,(ahora-inicio)/duracion));
-    if(!estado.pausado){
-      e.dataset.progreso=String(progreso);
-      e.style.left=(-12+90*progreso)+"%";
-    }
-    if(progreso<1)e._ironFistFrame=requestAnimationFrame(frame);
-  }
-  e._ironFistFrame=requestAnimationFrame(frame);
-}
-
+function lanzar(e,delay=0){if(!e)return;setTimeout(()=>{if(!estado.jugando||estado.pausado||estado.terminado)return;e.dataset.tocado="0";e.style.top=Math.max(7,Math.random()*78)+"%";e.style.left="-12%";e.style.transition="left 5.2s linear";requestAnimationFrame(()=>e.style.left="78%");},delay);}
 function congelarMeteoritos(ids){
   ids.forEach(id=>{
     const e=$(id);
     if(!e||e.dataset.tocado==="1")return;
-    cancelAnimationFrame(e._ironFistFrame);
-    const left=e.getBoundingClientRect().left;
-    const parent=e.parentElement?.getBoundingClientRect();
-    if(!parent)return;
-    const progreso=Math.max(0,Math.min(1,(left-parent.left)/(parent.width||1)));
-    e.dataset.progreso=String(progreso);
-    e.style.transition="none";
-    e.style.left=(-12+90*progreso)+"%";
+    e.getAnimations().forEach(a=>a.pause());
   });
 }
 function reanudarMeteoritos(ids){
   ids.forEach(id=>{
     const e=$(id);
     if(!e||e.dataset.tocado==="1")return;
-    animarMeteorito(e,parseFloat(e.dataset.progreso||"0"));
+    e.getAnimations().forEach(a=>a.play());
   });
 }
 function iniciarMeteoritos(){meteoritos.forEach((id,i)=>{const e=$(id);if(!e)return;ocultar(e);lanzar(e,i*1200);});}
