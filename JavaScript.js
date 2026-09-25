@@ -80,23 +80,28 @@ function pausarNivel1(){if(!estado.jugando||estado.terminado)return;estado.pausa
 function reiniciarNivel1(){clearInterval(estado.timer);clearInterval(estado.impactTimer);estado={tiempo:70,puntos:0,jugando:false,pausado:false,terminado:false,timer:null,impactTimer:null};meteoritos.forEach(id=>ocultar($(id)));actualizarHUD();$("Pausa_Pantalla").style.display="none";$("GANASTE_PANTALLA").style.display="none";$("Start").style.display="flex";pause("Fondo_Ciberpunk");}
 function cuenta(id,callback){const box=$(id),sp=box?.querySelector("span");if(!box||!sp){callback();return;}box.style.display="block";let n=3;sp.textContent=n;const t=setInterval(()=>{n--;sp.textContent=n>0?n:"¡YA!";if(n<=0){clearInterval(t);setTimeout(()=>{box.style.display="none";callback();},350);}},800);}
 function conectar(id){const e=$(id);if(e)e.addEventListener("pointerdown",()=>golpear(id));}
-function configurar(){barra("Puntaje","BarraProgresoLvl1","ProgresoInternoLvl1");$("Play")?.addEventListener("click",()=>cuenta("Contenedor_contador",iniciarNivel1));$("Pause")?.addEventListener("click",pausarNivel1);$("Reiniciar")?.addEventListener("click",reiniciarNivel1);meteoritos.forEach(conectar);$("NEXT")?.addEventListener("click",()=>{if($("NIVEL_01").style.display!=="none"&&estado.terminado){$("NIVEL_01").style.display="none";$("NIVEL_02").style.display="flex";$("NIVEL3").style.display="none";$("NEXT").style.display="none";window.prepararNivel2?.();}else if($("NIVEL_02").style.display!=="none"&&window.nivel2Terminado?.()){$("NIVEL_02").style.display="none";$("NIVEL3").style.display="flex";$("NEXT").style.display="none";window.prepararNivel3?.();}});$("NEXT").style.display="none";actualizarHUD();}
+function configurar(){barra("Puntaje","BarraProgresoLvl1","ProgresoInternoLvl1");$("Play")?.addEventListener("click",()=>cuenta("Contenedor_contador",iniciarNivel1));$("Pause")?.addEventListener("click",pausarNivel1);$("Reiniciar")?.addEventListener("click",reiniciarNivel1);meteoritos.forEach(conectar);$("NEXT").style.display="none";$("NEXT").style.pointerEvents="none";actualizarHUD();}
 window.iniciarNivel1=iniciarNivel1;
 window.nivel1Terminado=()=>estado.terminado;
 document.addEventListener("DOMContentLoaded",()=>{configurarNarracion();configurar();});
 })();
-/* Navegacion robusta entre niveles */
+/* Navegación única y segura entre niveles */
 function avanzarNivelSeguro(){
  const a=document.getElementById("NIVEL_01"),b=document.getElementById("NIVEL_02"),c=document.getElementById("NIVEL3"),n=document.getElementById("NEXT");
  if(!a||!b||!c||!n)return;
  if(a.style.display!=="none" && window.nivel1Terminado?.()){
-  a.style.display="none";b.style.display="flex";c.style.display="none";n.style.display="none";n.style.pointerEvents="none";window.prepararNivel2?.();return;
+  a.style.display="none";b.style.display="flex";c.style.display="none";
+  n.style.display="none";n.style.pointerEvents="none";
+  window.prepararNivel2?.();return;
  }
  if(b.style.display!=="none" && window.nivel2Terminado?.()){
-  b.style.display="none";c.style.display="flex";n.style.display="none";n.style.pointerEvents="none";window.prepararNivel3?.();
+  b.style.display="none";c.style.display="flex";
+  n.style.display="none";n.style.pointerEvents="none";
+  window.prepararNivel3?.();
  }
 }
-window.addEventListener("DOMContentLoaded",()=>{
+window.avanzarNivelSeguro=avanzarNivelSeguro;
+document.addEventListener("DOMContentLoaded",()=>{
  const n=document.getElementById("NEXT");
- if(n){n.addEventListener("click",avanzarNivelSeguro);n.addEventListener("pointerup",avanzarNivelSeguro);}
+ if(n)n.addEventListener("click",(e)=>{e.preventDefault();e.stopPropagation();avanzarNivelSeguro();});
 });
