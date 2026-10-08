@@ -427,3 +427,63 @@ body{
   border-color:rgba(157,252,255,.9)!important;
   box-shadow:0 0 22px rgba(168,85,247,.55),0 0 38px rgba(0,217,255,.18),inset 0 1px rgba(255,255,255,.2)!important;
 }
+
+
+/* CIERRE FINAL: escena cósmica sin naves con siluetas de ojos */
+#Pantalla_creditoslvl3{
+ position:absolute;inset:0;z-index:7;display:none;overflow:hidden;isolation:isolate;
+ background:
+  radial-gradient(ellipse at 50% 46%,rgba(130,58,255,.28),transparent 30%),
+  radial-gradient(ellipse at 50% 48%,rgba(0,225,255,.12),transparent 46%),
+  radial-gradient(ellipse at 15% 18%,rgba(189,60,255,.14),transparent 28%),
+  linear-gradient(180deg,rgba(5,2,22,.94),rgba(13,5,38,.96) 58%,rgba(4,3,22,.98));
+}
+#Pantalla_creditoslvl3::before{
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.9;
+ background-image:
+ radial-gradient(2px 2px at 8% 18%,#fff 98%,transparent),
+ radial-gradient(1px 1px at 19% 61%,#b9faff 98%,transparent),
+ radial-gradient(2px 2px at 32% 27%,#fff 98%,transparent),
+ radial-gradient(1px 1px at 73% 19%,#e4c2ff 98%,transparent),
+ radial-gradient(2px 2px at 88% 45%,#fff 98%,transparent),
+ radial-gradient(1px 1px at 81% 77%,#9dfcff 98%,transparent),
+ radial-gradient(1.5px 1.5px at 11% 82%,#e4c2ff 98%,transparent);
+ background-size:230px 190px,280px 230px,310px 260px,350px 280px,290px 240px,320px 260px,270px 220px;
+ animation:campoEstelar 24s linear infinite;
+}
+.EscenaFinalCosmica{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(8px,2vh,22px);padding:clamp(12px,3vw,32px);text-align:center}
+.PortalCosmico{
+ position:relative;display:grid;place-items:center;
+ width:clamp(140px,25vh,250px);aspect-ratio:1;border-radius:50%;
+ background:radial-gradient(circle at 35% 28%,#d9c7ff 0%,#9b6cff 8%,#5923b6 24%,#21104f 48%,#07031a 66%);
+ border:1px solid rgba(213,183,255,.78);
+ box-shadow:0 0 18px rgba(190,110,255,.8),0 0 50px rgba(133,55,255,.52),0 0 100px rgba(52,210,255,.16),inset -18px -20px 32px rgba(0,0,0,.72);
+ animation:planetaFinalFlota 5s ease-in-out infinite;
+}
+.PortalCosmico::before,.PortalCosmico::after{content:"";position:absolute;inset:-13%;border:2px solid rgba(148,111,255,.8);border-radius:50%;transform:rotate(-24deg) scaleY(.34);box-shadow:0 0 12px rgba(167,112,255,.7),inset 0 0 10px rgba(0,225,255,.24)}
+.PortalCosmico::after{inset:-20%;border-color:rgba(102,240,255,.6);transform:rotate(32deg) scaleY(.28);border-width:1px}
+.PortalCosmico span{color:#fff;font-size:clamp(28px,5vh,52px);text-shadow:0 0 16px #fff,0 0 35px #bf70ff;animation:estrellaFinal 3s ease-in-out infinite alternate}
+.FinalCosmicoTexto{max-width:min(680px,94%);padding:clamp(14px,2.2vh,24px) clamp(16px,3vw,34px);border:1px solid rgba(184,130,255,.48);border-radius:20px;background:linear-gradient(135deg,rgba(34,14,72,.78),rgba(9,7,34,.84));box-shadow:0 0 35px rgba(135,59,255,.2),inset 0 1px rgba(255,255,255,.12);backdrop-filter:blur(8px)}
+.FinalCosmicoTexto>span{display:block;color:#9dfcff;font-size:clamp(8px,1.1vw,12px);font-weight:900;letter-spacing:clamp(1px,.35vw,4px);margin-bottom:10px;text-shadow:0 0 14px rgba(0,225,255,.65)}
+.FinalCosmicoTexto h2{margin:0;color:#fff;font-size:clamp(16px,3vw,32px);line-height:1.45;letter-spacing:.5px;text-shadow:0 0 12px rgba(195,120,255,.8),0 0 28px rgba(125,60,255,.5)}
+.FinalCosmicoTexto p{margin:9px 0 0;color:#d8c8f5;font-size:clamp(11px,1.4vw,16px)}
+.Pantalla_navelvl3,.Pantalla_Nodrizalvl3,.Pantalla_nave2lvl3{display:none!important}
+#Creditoslvl3{z-index:12;background:linear-gradient(120deg,rgba(66,26,115,.96),rgba(19,10,51,.97));border-color:rgba(195,142,255,.7);box-shadow:0 0 24px rgba(150,70,255,.28),inset 0 1px rgba(255,255,255,.12)}
+#Creditoslvl3 h3{color:#c9a4ff;text-shadow:0 0 12px rgba(170,100,255,.5)}
+#Proximolvl3{z-index:12;border:1px solid rgba(120,232,255,.55);background:linear-gradient(120deg,rgba(65,25,126,.96),rgba(11,32,75,.97));box-shadow:0 0 20px rgba(0,210,255,.15);color:#fff}
+#Proximolvl3 h4:first-child{color:#a6f7ff}
+@keyframes campoEstelar{from{background-position:0 0,0 0,0 0,0 0,0 0,0 0,0 0}to{background-position:230px 190px,-280px 230px,310px -260px,-350px 280px,290px -240px,-320px 260px,270px -220px}}
+@keyframes planetaFinalFlota{0%,100%{transform:translateY(0) scale(.98)}50%{transform:translateY(-8px) scale(1.02)}}
+@keyframes estrellaFinal{from{opacity:.7;transform:scale(.9) rotate(-12deg)}to{opacity:1;transform:scale(1.1) rotate(12deg)}}
+@media(max-width:760px){
+ .EscenaFinalCosmica{gap:10px;padding:10px}
+ .PortalCosmico{width:clamp(115px,23vh,175px)}
+ .FinalCosmicoTexto{padding:12px 14px}
+ #Creditoslvl3{bottom:8%;width:min(420px,88%)}
+ #Proximolvl3{bottom:1%}
+}
+@media(max-height:620px){
+ .EscenaFinalCosmica{flex-direction:row;gap:clamp(14px,3vw,36px)}
+ .PortalCosmico{width:clamp(110px,24vh,190px);flex:0 0 auto}
+ .FinalCosmicoTexto{max-width:60%}
+}
