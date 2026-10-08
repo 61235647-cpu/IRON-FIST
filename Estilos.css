@@ -245,3 +245,102 @@ body{
   .Seccion_Juego{gap:3px}
   .Contenedor,.Contenedorlvl2,.Contenedorlvl3{min-height:100px}
 }
+
+
+/* IRON FIST — renovacion cosmica violeta */
+:root{
+ --bg:#09051b;--panel:rgba(23,13,55,.90);--panel2:rgba(36,18,78,.94);
+ --cyan:#9dfcff;--yellow:#f3b8ff;--red:#ff4fba;--green:#78ffd9;
+ --text:#f7f1ff;--muted:#c8b9ef;--shadow:0 18px 55px rgba(3,0,20,.62);
+}
+html,body{background-color:#080419}
+body{
+ background-image:
+  radial-gradient(ellipse at 16% 20%,rgba(125,42,255,.35),transparent 34%),
+  radial-gradient(ellipse at 83% 12%,rgba(0,225,255,.15),transparent 28%),
+  radial-gradient(ellipse at 70% 85%,rgba(219,40,255,.18),transparent 35%),
+  url("IMG/Fondo_Espacio.svg");
+ background-size:auto,auto,auto,cover;background-position:center;background-attachment:fixed;
+}
+.Seccion_01{
+ background:radial-gradient(ellipse at 50% 42%,rgba(74,29,147,.38),transparent 48%),
+ linear-gradient(135deg,rgba(6,3,25,.56),rgba(20,6,50,.38));
+}
+.Nombre{
+ color:#fff;text-shadow:0 0 8px #fff,0 0 20px #c45cff,0 0 42px #8d42ff,0 0 76px rgba(0,240,255,.42);
+ letter-spacing:clamp(1px,.6vw,5px);animation:cosmicTitle 3.2s ease-in-out infinite alternate;
+}
+.Texto_Principal,.Titulo_Reglas,.Titulo_historia,.Tituloar_Juego_5{
+ color:#f5eaff;text-shadow:0 0 12px rgba(201,110,255,.75),0 0 28px rgba(113,65,255,.55);
+}
+@keyframes cosmicTitle{from{filter:brightness(.94)}to{filter:brightness(1.18)}}
+.Boton,.Listo,.NEXT,.Boton_preparado{
+ color:#fff!important;border:1px solid rgba(255,255,255,.65)!important;
+ background:linear-gradient(115deg,#6d28d9 0%,#b52dff 48%,#00d9ff 100%)!important;
+ box-shadow:0 0 12px rgba(183,70,255,.65),0 0 28px rgba(88,57,255,.35),inset 0 1px rgba(255,255,255,.35)!important;
+ text-shadow:0 1px 3px rgba(20,0,50,.6);position:relative;overflow:hidden;
+}
+.Boton:hover,.Listo:hover,.NEXT:hover,.Boton_preparado:hover{
+ filter:brightness(1.22)!important;box-shadow:0 0 18px rgba(214,107,255,.85),0 0 42px rgba(0,217,255,.4)!important;
+}
+#Reglas{background:linear-gradient(135deg,rgba(11,5,36,.98),rgba(37,11,78,.97))}
+.Reglas_estilos,.Contenedor_Historia{
+ border:1px solid rgba(196,126,255,.48)!important;
+ background:linear-gradient(145deg,rgba(27,13,65,.96),rgba(12,10,40,.95))!important;
+ box-shadow:0 0 28px rgba(126,48,255,.19),inset 0 0 22px rgba(119,48,255,.08)!important;
+}
+.Seccion_Juego{background:linear-gradient(145deg,rgba(7,3,27,.97),rgba(23,7,54,.95))!important}
+.Seccion_Juego::before{
+ content:"";position:absolute;inset:0;pointer-events:none;opacity:.62;
+ background-image:
+  radial-gradient(2px 2px at 8% 17%,#fff 98%,transparent),
+  radial-gradient(1.5px 1.5px at 19% 72%,#cbb6ff 98%,transparent),
+  radial-gradient(2px 2px at 31% 31%,#fff 98%,transparent),
+  radial-gradient(1px 1px at 47% 83%,#9ffcff 98%,transparent),
+  radial-gradient(2px 2px at 63% 18%,#fff 98%,transparent),
+  radial-gradient(1px 1px at 74% 59%,#cbb6ff 98%,transparent),
+  radial-gradient(2px 2px at 89% 34%,#fff 98%,transparent),
+  radial-gradient(1px 1px at 95% 79%,#9ffcff 98%,transparent);
+ background-size:270px 230px,310px 280px,370px 310px,240px 300px,330px 250px,290px 340px,410px 300px,350px 260px;
+}
+#NIVEL_01,#NIVEL_02,#NIVEL3{background:radial-gradient(ellipse at 50% 60%,rgba(81,30,150,.16),transparent 64%)}
+.Cabezera,.Cabezeralvl2,.Cabezeralvl3{filter:drop-shadow(0 5px 18px rgba(102,40,255,.16))}
+.Tiempo,.Puntaje,.Tiempolvl2,.Puntajelvl2,.Tiempolvl3,.Puntajelvl3{
+ border-color:rgba(194,128,255,.46)!important;
+ background:linear-gradient(145deg,rgba(44,24,92,.96),rgba(16,11,45,.97))!important;
+ box-shadow:0 0 16px rgba(139,60,255,.13),inset 0 1px rgba(255,255,255,.07)!important;
+}
+.Cabezera h3,.Cabezeralvl2 h3,.Cabezeralvl3 h3{color:#c9b5f5!important}
+.Tiempo span,.Puntaje span,.Tiempolvl2 span,.Puntajelvl2 span,.Tiempolvl3 span,.Puntajelvl3 span{color:#fff;text-shadow:0 0 12px rgba(191,120,255,.65)}
+.Pause,.Pauselvl2,.Pauselvl3{
+ border-color:rgba(255,121,226,.68)!important;background:linear-gradient(135deg,#a21caf,#e11d8d)!important;
+ box-shadow:0 0 16px rgba(225,29,141,.22)!important;
+}
+.Reiniciar,.Reiniciarlvl2,.Reiniciarlvl3{
+ border-color:rgba(115,215,255,.55)!important;background:linear-gradient(135deg,#302078,#176baf)!important;
+ box-shadow:0 0 16px rgba(23,107,175,.24)!important;
+}
+.Meteiorito,.Meteioritolvl2,.Meteoritolvl3{filter:drop-shadow(0 0 8px rgba(255,126,240,.85)) drop-shadow(0 0 18px rgba(131,71,255,.6))!important}
+.Planeta,.Planetalvl2,.Planetalvl3{filter:drop-shadow(0 0 22px rgba(125,79,255,.48))}
+.Limite,.Limitelvl2,.Limitelvl3{filter:drop-shadow(0 0 12px rgba(255,61,202,.9))}
+.Start,.Startlvl2,.Startlvl3,.GANASTE_PANTALLA,.GanastePantallaLvL2,.Pausa_Pantalla,.Pausa_Pantallalvl2,.Pausa_Pantallalvl3{
+ background:rgba(10,4,30,.77)!important;backdrop-filter:blur(8px);
+}
+.Contenedor_Mensaje_Star{border-color:rgba(189,110,255,.4)}
+.Play,.Playlvl2,.Playlvl3{
+ color:#fff!important;border:1px solid rgba(239,211,255,.72)!important;
+ background:linear-gradient(110deg,#6d28d9,#c026d3 55%,#7c3aed)!important;
+ box-shadow:0 0 14px rgba(188,74,255,.62),0 0 34px rgba(124,58,237,.3)!important;
+ border-radius:14px!important;letter-spacing:1px;transition:transform .2s,filter .2s,box-shadow .2s;
+}
+.Play:hover,.Playlvl2:hover,.Playlvl3:hover{
+ transform:translateY(-2px) scale(1.04);filter:brightness(1.18);
+ box-shadow:0 0 20px rgba(215,116,255,.85),0 0 44px rgba(124,58,237,.48)!important;
+}
+#Contenedor_contador,#Contenedor_contadorlvl2,#Contenedor_contadorlvl3{color:#fff;text-shadow:0 0 18px #db7cff,0 0 40px #8b5cf6}
+@media(max-width:600px){
+ .Nombre{font-size:clamp(25px,8vw,48px);text-align:center}
+ .Texto_Principal{font-size:clamp(12px,3.4vw,20px)}
+ .Boton{font-size:15px;padding:13px 28px}
+ .Meteiorito,.Meteioritolvl2,.Meteoritolvl3{width:clamp(43px,12vw,60px)}
+}
