@@ -410,3 +410,20 @@ body{
  .Reglas_estilos p{font-size:10px!important;line-height:1.4!important}
  .Regla_pista{padding-top:5px}
 }
+
+
+/* Igualar las tarjetas de dificultad a la paleta cósmica */
+#Dificultad.dificultad-cosmica,
+#Dificultadlvl2.dificultad-cosmica,
+.Dificultadlvl3.dificultad-cosmica{
+  background:linear-gradient(115deg,rgba(109,40,217,.94) 0%,rgba(126,34,206,.92) 48%,rgba(37,25,105,.96) 100%)!important;
+  border:1px solid rgba(215,170,255,.82)!important;
+  box-shadow:0 0 18px rgba(168,85,247,.42),0 0 32px rgba(124,58,237,.24),inset 0 1px rgba(255,255,255,.16)!important;
+  color:#fff!important;
+}
+#Dificultad.dificultad-cosmica:hover,
+#Dificultadlvl2.dificultad-cosmica:hover,
+.Dificultadlvl3.dificultad-cosmica:hover{
+  border-color:rgba(157,252,255,.9)!important;
+  box-shadow:0 0 22px rgba(168,85,247,.55),0 0 38px rgba(0,217,255,.18),inset 0 1px rgba(255,255,255,.2)!important;
+}
