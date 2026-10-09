@@ -19,26 +19,28 @@ function ganar(){s.terminado=true;s.jugando=false;clearInterval(s.timer);clearIn
 function explosionMeteorito(e){
  if(!e)return;
  const r=e.getBoundingClientRect();
- const fx=document.createElement("div");
- fx.className="explosionMeteorito";
- fx.setAttribute("aria-hidden","true");
- fx.style.left=(r.left+r.width/2)+"px";
- fx.style.top=(r.top+r.height/2)+"px";
- // Destello central y anillo expansivo para que la destrucción se note claramente.
- const anillo=document.createElement("b");
- anillo.className="anilloExplosion";
- fx.appendChild(anillo);
- for(let i=0;i<16;i++){
+ const x=r.left+r.width/2, y=r.top+r.height/2;
+ const capa=document.createElement("div");
+ Object.assign(capa.style,{position:"fixed",inset:"0",width:"100vw",height:"100vh",overflow:"visible",pointerEvents:"none",zIndex:"2147483647"});
+ capa.setAttribute("aria-hidden","true");
+ const centro=document.createElement("div");
+ Object.assign(centro.style,{position:"absolute",left:x+"px",top:y+"px",width:"24px",height:"24px",borderRadius:"50%",transform:"translate(-50%,-50%)",background:"radial-gradient(circle,#fff 0%,#fff8b0 18%,#ffb52e 40%,#ff4b21 66%,rgba(168,85,247,.5) 78%,transparent 80%)",boxShadow:"0 0 20px 12px rgba(255,190,50,.9),0 0 48px 25px rgba(255,75,33,.65)"});
+ capa.appendChild(centro);
+ if(centro.animate)centro.animate([{transform:"translate(-50%,-50%) scale(.2)",opacity:1},{transform:"translate(-50%,-50%) scale(4.5)",opacity:1,offset:.25},{transform:"translate(-50%,-50%) scale(7)",opacity:0}],{duration:700,easing:"ease-out",fill:"forwards"});
+ const anillo=document.createElement("div");
+ Object.assign(anillo.style,{position:"absolute",left:x+"px",top:y+"px",width:"18px",height:"18px",boxSizing:"border-box",border:"4px solid #ffe08a",borderRadius:"50%",boxShadow:"0 0 18px #ff7b35",transform:"translate(-50%,-50%)"});
+ capa.appendChild(anillo);
+ if(anillo.animate)anillo.animate([{transform:"translate(-50%,-50%) scale(.2)",opacity:1},{transform:"translate(-50%,-50%) scale(7)",opacity:0}],{duration:800,easing:"ease-out",fill:"forwards"});
+ for(let i=0;i<20;i++){
+  const ang=i*Math.PI/10,dist=65+(i%4)*18;
   const p=document.createElement("i");
-  p.style.setProperty("--angulo",(i*22.5)+"deg");
-  p.style.setProperty("--distancia",(42+(i%4)*15)+"px");
-  p.style.setProperty("--demora",(i%4*18)+"ms");
-  fx.appendChild(p);
+  Object.assign(p.style,{position:"absolute",left:x+"px",top:y+"px",width:(i%3===0?9:6)+"px",height:(i%3===0?9:6)+"px",borderRadius:"50%",background:i%2?"#ff6b35":"#f4c7ff",boxShadow:"0 0 12px 4px "+(i%2?"rgba(255,143,40,.95)":"rgba(168,85,247,.95)"),transform:"translate(-50%,-50%)"});
+  capa.appendChild(p);
+  if(p.animate)p.animate([{transform:"translate(-50%,-50%) scale(1.3)",opacity:1},{transform:"translate(calc(-50% + "+(Math.cos(ang)*dist)+"px),calc(-50% + "+(Math.sin(ang)*dist)+"px)) scale(.1)",opacity:0}],{duration:850,delay:(i%5)*15,easing:"cubic-bezier(.1,.7,.2,1)",fill:"forwards"});
  }
- document.body.appendChild(fx);
- window.setTimeout(()=>fx.remove(),1000);
-}function golpe(id){if(!s.jugando||s.pausado||s.terminado||s.reiniciando)return;const e=$(id);if(!e||e.dataset.tocado==="1")return;e.dataset.tocado="1";s.puntos++;hud();play(id===ids[0]?"Puntos_sound":id===ids[1]?"Punto2":"Punto3");explosionMeteorito(e);ocultar(e);setTimeout(()=>{if(s.jugando&&!s.terminado)lanzar(e);},450);if(s.puntos>=5)ganar();}
-function iniciar(){s={tiempo:60,puntos:0,jugando:true,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};hud();$("Startlvl2").style.display="none";$("Pausa_Pantallalvl2").style.display="none";$("GanastePantallaLvL2").style.display="none";play("Fondo_Ciberpunk");iniciarMeteoritos();s.timer=setInterval(()=>{if(!s.pausado&&s.jugando){s.tiempo--;hud();if(s.tiempo<=0)perderNivel2("Se agotó el tiempo.")}},1000);s.impact=setInterval(()=>{if(s.pausado||s.reiniciando||!s.jugando||s.terminado)return;const linea=$("NIVEL_02")?.querySelector(".Limitelvl2");if(!linea)return;const x=linea.getBoundingClientRect().left;for(const id of ids){const e=$(id);if(!e||e.dataset.tocado==="1"||getComputedStyle(e).visibility==="hidden"||Number(getComputedStyle(e).opacity)===0)continue;const r=e.getBoundingClientRect();if(r.left+r.width*0.5>=x){perderNivel2("Un meteorito llegó a la línea de impacto.");return;}}},40);}
+ document.body.appendChild(capa);
+ window.setTimeout(()=>capa.remove(),1100);
+}function iniciar(){s={tiempo:60,puntos:0,jugando:true,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};hud();$("Startlvl2").style.display="none";$("Pausa_Pantallalvl2").style.display="none";$("GanastePantallaLvL2").style.display="none";play("Fondo_Ciberpunk");iniciarMeteoritos();s.timer=setInterval(()=>{if(!s.pausado&&s.jugando){s.tiempo--;hud();if(s.tiempo<=0)perderNivel2("Se agotó el tiempo.")}},1000);s.impact=setInterval(()=>{if(s.pausado||s.reiniciando||!s.jugando||s.terminado)return;const linea=$("NIVEL_02")?.querySelector(".Limitelvl2");if(!linea)return;const x=linea.getBoundingClientRect().left;for(const id of ids){const e=$(id);if(!e||e.dataset.tocado==="1"||getComputedStyle(e).visibility==="hidden"||Number(getComputedStyle(e).opacity)===0)continue;const r=e.getBoundingClientRect();if(r.left+r.width*0.5>=x){perderNivel2("Un meteorito llegó a la línea de impacto.");return;}}},40);}
 function pausa(){if(!s.jugando||s.terminado)return;s.pausado=!s.pausado;$("Pausa_Pantallalvl2").style.display=s.pausado?"flex":"none";if(s.pausado){congelarMeteoritos(ids);pause("Fondo_Ciberpunk");}else{reanudarMeteoritos(ids);play("Fondo_Ciberpunk");}}
 function reiniciar(){cancelarCuenta();clearInterval(s.timer);clearInterval(s.impact);s={tiempo:60,puntos:0,jugando:false,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};hud();ids.forEach(id=>ocultar($(id)));$("Pausa_Pantallalvl2").style.display="none";$("GanastePantallaLvL2").style.display="none";$("Startlvl2").style.display="flex";pause("Fondo_Ciberpunk");}
 function cuenta(){if(cuentaActiva)return;const box=$("Contenedor_contadorlvl2"),sp=$("RGBlvl2"),btn=$("Playlvl2");if(!box||!sp)return;cuentaActiva=true;if(btn)btn.disabled=true;let n=3;box.style.display="block";sp.textContent=n;cuentaTimer=setInterval(()=>{n--;sp.textContent=n>0?n:"¡YA!";if(n<=0){clearInterval(cuentaTimer);cuentaTimer=null;cuentaFinal=setTimeout(()=>{if(!cuentaActiva)return;box.style.display="none";cuentaActiva=false;cuentaFinal=null;if(btn)btn.disabled=false;iniciar();},350);}},800);}
