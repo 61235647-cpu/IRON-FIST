@@ -33,19 +33,23 @@ function explosionMeteorito(e){
  const r=e.getBoundingClientRect();
  const fx=document.createElement("div");
  fx.className="explosionMeteorito";
+ fx.setAttribute("aria-hidden","true");
  fx.style.left=(r.left+r.width/2)+"px";
  fx.style.top=(r.top+r.height/2)+"px";
- for(let i=0;i<12;i++){
+ // Destello central y anillo expansivo para que la destrucción se note claramente.
+ const anillo=document.createElement("b");
+ anillo.className="anilloExplosion";
+ fx.appendChild(anillo);
+ for(let i=0;i<16;i++){
   const p=document.createElement("i");
-  p.style.setProperty("--angulo",(i*30)+"deg");
-  p.style.setProperty("--distancia",(24+(i%3)*12)+"px");
+  p.style.setProperty("--angulo",(i*22.5)+"deg");
+  p.style.setProperty("--distancia",(42+(i%4)*15)+"px");
+  p.style.setProperty("--demora",(i%4*18)+"ms");
   fx.appendChild(p);
  }
  document.body.appendChild(fx);
- fx.addEventListener("animationend",()=>fx.remove(),{once:true});
- setTimeout(()=>fx.remove(),750);
-}
-function golpe(id){if(!s.jugando||s.pausado||s.terminado||s.reiniciando)return;const e=$(id);if(!e||e.dataset.tocado==="1")return;e.dataset.tocado="1";s.puntos++;hud();play(id===ids[0]?"Puntos_sound":id===ids[1]?"Punto2":id===ids[2]?"Punto3":"Punto4");e.classList.add("impactoMeteorito");explosionMeteorito(e);ocultar(e);setTimeout(()=>{e.classList.remove("impactoMeteorito");if(s.jugando&&!s.terminado)lanzar(e);},450);if(s.puntos>=5)victoria();}
+ window.setTimeout(()=>fx.remove(),1000);
+}function golpe(id){if(!s.jugando||s.pausado||s.terminado||s.reiniciando)return;const e=$(id);if(!e||e.dataset.tocado==="1")return;e.dataset.tocado="1";s.puntos++;hud();play(id===ids[0]?"Puntos_sound":id===ids[1]?"Punto2":id===ids[2]?"Punto3":"Punto4");e.classList.add("impactoMeteorito");explosionMeteorito(e);ocultar(e);setTimeout(()=>{e.classList.remove("impactoMeteorito");if(s.jugando&&!s.terminado)lanzar(e);},450);if(s.puntos>=5)victoria();}
 function iniciar(){s={tiempo:50,puntos:0,jugando:true,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};hud();$("Startlvl3").style.display="none";$("Pausa_Pantallalvl3").style.display="none";$("Pantalla_Ovnislvl3").style.display="none";$("Pantalla_Nodrizalvl3").style.display="none";$("Pantalla_Ovnis2lvl3").style.display="none";$("Pantalla_creditoslvl3").style.display="none";$("Creditoslvl3").style.display="none";$("Proximolvl3").style.display="none";play("Fondo_Ciberpunk");iniciarMeteoritos();s.timer=setInterval(()=>{if(!s.pausado&&s.jugando){s.tiempo--;hud();if(s.tiempo<=0)perderNivel3("Se agotó el tiempo.")}},1000);s.impact=setInterval(()=>{if(s.pausado||s.reiniciando||!s.jugando||s.terminado)return;const linea=$("NIVEL3")?.querySelector(".Limitelvl3");if(!linea)return;const x=linea.getBoundingClientRect().left;for(const id of ids){const e=$(id);if(!e||e.dataset.tocado==="1"||getComputedStyle(e).visibility==="hidden"||Number(getComputedStyle(e).opacity)===0)continue;const r=e.getBoundingClientRect();if(r.left+r.width*0.5>=x){perderNivel3("Un meteorito llegó a la línea de impacto.");return;}}},40);}
 function pausa(){if(!s.jugando||s.terminado)return;s.pausado=!s.pausado;$("Pausa_Pantallalvl3").style.display=s.pausado?"flex":"none";if(s.pausado){congelarMeteoritos(ids);pause("Fondo_Ciberpunk");}else{reanudarMeteoritos(ids);play("Fondo_Ciberpunk");}}
 function reiniciar(){cancelarCuenta();clearInterval(s.timer);clearInterval(s.impact);s={tiempo:50,puntos:0,jugando:false,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};hud();ids.forEach(id=>ocultar($(id)));$("Pausa_Pantallalvl3").style.display="none";$("Pantalla_Ovnislvl3").style.display="none";$("Pantalla_Nodrizalvl3").style.display="none";$("Pantalla_Ovnis2lvl3").style.display="none";$("Pantalla_creditoslvl3").style.display="none";$("Creditoslvl3").style.display="none";$("Proximolvl3").style.display="none";$("Startlvl3").style.display="flex";pause("Fondo_Ciberpunk");pause("Musica_Final");}
