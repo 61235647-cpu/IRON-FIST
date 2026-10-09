@@ -76,39 +76,11 @@ function iniciarMeteoritos(){meteoritos.forEach((id,i)=>{const e=$(id);if(!e)ret
 function detenerMeteoritos(){meteoritos.forEach(id=>{const e=$(id);if(e)e.dataset.tocado="1";});}
 function perderNivel1(mensaje){if(!estado.jugando||estado.terminado||estado.reiniciando)return;estado.reiniciando=true;estado.tiempo=70;estado.puntos=0;actualizarHUD();meteoritos.forEach(id=>ocultar($(id)));play("Perdiste_sound");if(window.Swal)Swal.fire({title:"¡Defensa fallida!",text:mensaje+" La ronda se reiniciará.",icon:"warning",confirmButtonText:"Continuar",background:"#07101c",color:"#fff"});setTimeout(()=>{if(estado.jugando&&!estado.terminado){estado.reiniciando=false;iniciarMeteoritos();}},900);}
 function ganarNivel1(){estado.terminado=true;estado.jugando=false;clearInterval(estado.timer);clearInterval(estado.impactTimer);detenerMeteoritos();meteoritos.forEach(id=>ocultar($(id)));pause("Fondo_Ciberpunk");play("Triunfo");$("GANASTE_PANTALLA").style.display="flex";$("NEXT").style.display="block";if(window.Swal)Swal.fire({title:"¡Nivel 1 completado!",text:"Has destruido 15 meteoritos. Continúa con el Nivel 2.",icon:"success",confirmButtonText:"Continuar",background:"#07101c",color:"#fff"});}
-function explosionMeteorito(e){
- // Efecto opcional: si una animación falla, el golpe del jugador sigue funcionando.
- let capa=null;
- try{
-  if(!e||!document.body)return;
-  const r=e.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
-  capa=document.createElement("div");
-  capa.setAttribute("aria-hidden","true");
-  capa.style.cssText="position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:2147483647";
-  const flash=document.createElement("div");
-  flash.style.cssText="position:absolute;left:"+x+"px;top:"+y+"px;width:24px;height:24px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff 0%,#fff4a3 22%,#ffae2e 48%,#ff4a1c 68%,transparent 75%);box-shadow:0 0 25px 12px rgba(255,150,30,.9)";
-  const ring=document.createElement("div");
-  ring.style.cssText="position:absolute;left:"+x+"px;top:"+y+"px;width:18px;height:18px;border:4px solid #ffd166;border-radius:50%;transform:translate(-50%,-50%);box-sizing:border-box";
-  capa.appendChild(flash);capa.appendChild(ring);
-  const parts=[];
-  for(let i=0;i<14;i++){
-   const a=Math.PI*2*i/14,d=45+(i%3)*18,p=document.createElement("i");
-   p.style.cssText="position:absolute;left:"+x+"px;top:"+y+"px;width:7px;height:7px;border-radius:50%;background:"+(i%2?"#ff672f":"#d8a5ff")+";box-shadow:0 0 9px 3px rgba(255,130,40,.8)";
-   capa.appendChild(p);parts.push({el:p,endX:x+Math.cos(a)*d,endY:y+Math.sin(a)*d});
-  }
-  document.body.appendChild(capa);
-  try{if(flash.animate)flash.animate([{transform:"translate(-50%,-50%) scale(.2)",opacity:1},{transform:"translate(-50%,-50%) scale(4)",opacity:1,offset:.3},{transform:"translate(-50%,-50%) scale(6)",opacity:0}],{duration:550,fill:"forwards"});}catch(_){}
-  try{if(ring.animate)ring.animate([{transform:"translate(-50%,-50%) scale(.2)",opacity:1},{transform:"translate(-50%,-50%) scale(6)",opacity:0}],{duration:650,fill:"forwards"});}catch(_){}
-  parts.forEach(v=>{try{if(v.el.animate)v.el.animate([{left:x+"px",top:y+"px",opacity:1},{left:v.endX+"px",top:v.endY+"px",opacity:0}],{duration:650,fill:"forwards"});}catch(_){}});
-  window.setTimeout(()=>{if(capa&&capa.parentNode)capa.remove();},800);
- }catch(err){if(capa&&capa.parentNode)capa.remove();console.warn("Efecto de explosión no disponible:",err);}
-}
 function golpear(id){
  if(!estado.jugando||estado.pausado||estado.terminado||estado.reiniciando)return;
  const e=$(id);if(!e||e.dataset.tocado==="1")return;
  e.dataset.tocado="1";estado.puntos++;actualizarHUD();
  play(id==="Meteiorito"?"Puntos_sound":"Punto2");
- try{explosionMeteorito(e);}catch(err){console.warn(err);}
  ocultar(e);
  setTimeout(()=>{if(estado.jugando&&!estado.terminado)lanzar(e);},450);
  if(estado.puntos>=5)ganarNivel1();
