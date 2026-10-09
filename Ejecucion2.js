@@ -43,6 +43,16 @@ function explosionMeteorito(e){
   window.setTimeout(()=>{if(capa&&capa.parentNode)capa.remove();},800);
  }catch(err){if(capa&&capa.parentNode)capa.remove();console.warn("Efecto de explosión no disponible:",err);}
 }
+function golpe(id){
+ if(!s.jugando||s.pausado||s.terminado||s.reiniciando)return;
+ const e=$(id);if(!e||e.dataset.tocado==="1")return;
+ e.dataset.tocado="1";s.puntos++;hud();
+ play(id===ids[0]?"Puntos_sound":id===ids[1]?"Punto2":"Punto3");
+ try{explosionMeteorito(e);}catch(err){console.warn(err);}
+ ocultar(e);
+ setTimeout(()=>{if(s.jugando&&!s.terminado)lanzar(e);},450);
+ if(s.puntos>=5)ganar();
+}
 function reiniciar(){cancelarCuenta();clearInterval(s.timer);clearInterval(s.impact);s={tiempo:60,puntos:0,jugando:false,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};hud();ids.forEach(id=>ocultar($(id)));$("Pausa_Pantallalvl2").style.display="none";$("GanastePantallaLvL2").style.display="none";$("Startlvl2").style.display="flex";pause("Fondo_Ciberpunk");}
 function cuenta(){if(cuentaActiva)return;const box=$("Contenedor_contadorlvl2"),sp=$("RGBlvl2"),btn=$("Playlvl2");if(!box||!sp)return;cuentaActiva=true;if(btn)btn.disabled=true;let n=3;box.style.display="block";sp.textContent=n;cuentaTimer=setInterval(()=>{n--;sp.textContent=n>0?n:"¡YA!";if(n<=0){clearInterval(cuentaTimer);cuentaTimer=null;cuentaFinal=setTimeout(()=>{if(!cuentaActiva)return;box.style.display="none";cuentaActiva=false;cuentaFinal=null;if(btn)btn.disabled=false;iniciar();},350);}},800);}
 window.nivel2Terminado=()=>s.terminado;
