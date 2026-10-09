@@ -603,3 +603,29 @@ body{
  .FinalCosmicoTexto p{margin-top:6px}
  .FinalCosmicoLogros{margin-top:8px}
 }
+
+
+/* Capítulo I: imagen centrada y fondo cósmico morado */
+#Seccion_2{
+  background:
+    radial-gradient(ellipse at 50% 78%,rgba(126,58,237,.28),transparent 44%),
+    radial-gradient(ellipse at 18% 15%,rgba(168,85,247,.16),transparent 38%),
+    linear-gradient(145deg,rgba(9,3,31,.97),rgba(28,10,65,.96) 55%,rgba(8,4,29,.98)) !important;
+}
+.Imgane_metiorito{
+  display:block;
+  width:min(440px,72vw);
+  max-height:34vh;
+  height:auto;
+  object-fit:contain;
+  object-position:center;
+  margin:18px auto 0;
+  padding:10px;
+  border:1px solid rgba(192,132,252,.55);
+  border-radius:18px;
+  background:radial-gradient(ellipse at center,rgba(109,40,217,.32),rgba(15,6,40,.94));
+  box-shadow:0 0 20px rgba(139,92,246,.25),0 0 42px rgba(109,40,217,.18),inset 0 0 18px rgba(192,132,252,.08);
+}
+@media(max-width:760px){
+  .Imgane_metiorito{width:min(340px,78vw);max-height:28vh;margin:14px auto 0;padding:7px}
+}
