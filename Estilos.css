@@ -657,3 +657,9 @@ body{
     object-fit:cover;
   }
 }
+
+
+/* Botones: estado inicial seguro y controles de inicio accesibles */
+#NEXT{display:none;}
+.Play,.Playlvl2,.Playlvl3{font-family:inherit;border:0;appearance:none;-webkit-appearance:none;}
+.Play:focus-visible,.Playlvl2:focus-visible,.Playlvl3:focus-visible{outline:3px solid #9dfcff;outline-offset:3px;}
