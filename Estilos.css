@@ -20,7 +20,7 @@ img{max-width:100%;user-select:none;-webkit-user-drag:none}
 .Cabezera,.Cabezeralvl2,.Cabezeralvl3{width:min(920px,100%);height:68px;flex:0 0 68px;display:grid;grid-template-columns:1fr 1fr 1.1fr .8fr;gap:7px}.Tiempo,.Puntaje,.Pause,.Tiempolvl2,.Puntajelvl2,.Pauselvl2,.Tiempolvl3,.Puntajelvl3,.Pauselvl3{min-width:0;border:1px solid rgba(199,179,138,.20);border-radius:14px;background:linear-gradient(150deg,var(--panel2),rgba(25,24,21,.98));display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;box-shadow:0 8px 25px rgba(0,0,0,.3)}.Cabezera h3,.Cabezeralvl2 h3,.Cabezeralvl3 h3{margin:0;font-size:11px;color:var(--muted);letter-spacing:1px}.Tiempo span,.Puntaje span,.Tiempolvl2 span,.Puntajelvl2 span,.Tiempolvl3 span,.Puntajelvl3 span{font-size:clamp(18px,2.2vw,26px);font-weight:900}.Pause,.Pauselvl2,.Pauselvl3,.Reiniciar,.Reiniciarlvl2,.Reiniciarlvl3{cursor:pointer;color:#fff;background:linear-gradient(135deg,#7b1020,#d62947);font-weight:900;min-width:0;border:1px solid rgba(199,179,138,.20);border-radius:14px;display:flex;align-items:center;justify-content:center;padding:8px;box-shadow:0 8px 25px rgba(0,0,0,.3)}.Pause h3,.Pauselvl2 h3,.Pauselvl3 h3,.Reiniciar h3,.Reiniciarlvl2 h3,.Reiniciarlvl3 h3{color:#fff;font-size:clamp(8px,1.05vw,11px);margin:0;text-align:center}.Reiniciar,.Reiniciarlvl2,.Reiniciarlvl3{background:linear-gradient(135deg,#26364d,#465b78)}
 .Contenedor,.Contenedorlvl2,.Contenedorlvl3{position:relative;width:min(920px,100%);flex:1;min-height:0;overflow:hidden;border:1px solid rgba(199,179,138,.22);border-radius:18px;background:radial-gradient(circle at 70% 50%,rgba(126,112,86,.07),transparent 45%),rgba(24,23,20,.96);box-shadow:var(--shadow)}
 .Limite,.Limitelvl2,.Limitelvl3{position:absolute;right:18%;top:0;width:3px;height:100%;background:linear-gradient(transparent,var(--red),transparent);box-shadow:0 0 12px rgba(184,92,75,.35);z-index:2}.Planeta,.Planetalvl2,.Planetalvl3{position:absolute;width:clamp(150px,30vw,330px);height:auto;right:2%;top:50%;transform:translateY(-50%);z-index:1;filter:drop-shadow(0 0 24px rgba(199,179,138,.16))}
-.Meteiorito,.Meteioritolvl2,.Meteoritolvl3{position:absolute;width:clamp(58px,8vw,82px);height:auto;left:-12%;z-index:4;cursor:pointer;will-change:left,top;filter:drop-shadow(0 0 9px rgba(168,96,52,.30));transition:left 2s linear,top .15s linear}.impactoMeteorito{animation:impacto .18s ease-out}@keyframes impacto{50%{transform:scale(1.35) rotate(15deg);filter:brightness(1.8) drop-shadow(0 0 18px #ffd43b)}}
+.Meteiorito,.Meteioritolvl2,.Meteoritolvl3{position:absolute;width:clamp(58px,8vw,82px);height:auto;left:-12%;z-index:4;cursor:pointer;will-change:left,top;filter:drop-shadow(0 0 9px rgba(168,96,52,.30));transition:left 2s linear,top .15s linear}.impactoMeteorito{animation:none}
 .Start,.Startlvl2,.Startlvl3,.Pausa_Pantalla,.Pausa_Pantallalvl2,.Pausa_Pantallalvl3,.GANASTE_PANTALLA,.GanastePantallaLvL2{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;background:radial-gradient(circle at center,rgba(38,36,31,.98),rgba(14,14,14,.995))}.Pausa_Pantalla,.Pausa_Pantallalvl2,.Pausa_Pantallalvl3,.GANASTE_PANTALLA,.GanastePantallaLvL2{display:none}
 .Texo,.Texolvl2,.Textolvl3{font-family:"Press Start 2P",monospace;font-size:clamp(15px,2.3vw,27px);line-height:1.7;margin:0 0 20px}.Pollo,.Dificultadlvl3 h1,#Dificultad h1{font-size:clamp(11px,1.5vw,18px)!important;font-family:"Press Start 2P",monospace;line-height:1.6;overflow-wrap:anywhere}#Dificultad,#Dificultadlvl2,.Dificultadlvl3{display:flex;align-items:center;justify-content:center;gap:12px;max-width:700px;width:100%;padding:14px;border:1px solid rgba(199,179,138,.20);border-radius:16px;background:rgba(45,43,38,.88)}#Dificultad img,#Dificultadlvl2 img,.Dificultadlvl3 img{width:72px!important;height:72px;object-fit:contain}.Play,.Playlvl2,.Playlvl3{display:inline-flex;align-items:center;justify-content:center;min-width:180px;padding:15px 28px;border-radius:13px;background:linear-gradient(135deg,var(--yellow),#fff0a0);color:#10151d;font-weight:900;font-size:17px;cursor:pointer;box-shadow:0 0 24px rgba(199,154,69,.12)}#Contenedor_contador,#Contenedor_contadorlvl2,#Contenedor_contadorlvl3{margin-top:15px;font-family:"Press Start 2P",monospace;font-size:clamp(34px,8vw,72px);color:var(--cyan);text-shadow:0 0 20px rgba(199,179,138,.28)}.Mensaje_Pause,.GANASTE_PANTALLA h1,.GanastePantallaLvL2 h1{font-family:"Press Start 2P",monospace;font-size:clamp(15px,2.4vw,28px);line-height:1.6;color:var(--yellow);max-width:850px}.GANASTE_PANTALLA h3,.GanastePantallaLvL2 h3{max-width:760px;line-height:1.6;color:var(--muted);font-size:clamp(12px,1.5vw,16px)}
 .BarraProgresoLvl1,.BarraProgresoLvl2,.BarraProgresoLvl3{position:absolute;left:12px;right:12px;bottom:5px;height:4px;background:rgba(255,255,255,.12);border-radius:4px;overflow:hidden}.ProgresoInternoLvl1,.ProgresoInternoLvl2,.ProgresoInternoLvl3{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--yellow));transition:width .2s}
@@ -659,40 +659,3 @@ body{
 }
 
 
-/* Explosión violeta al tocar un meteorito */
-.explosionMeteorito{
- position:fixed;z-index:99999;width:12px;height:12px;pointer-events:none;
- transform:translate(-50%,-50%);border-radius:50%;
- background:radial-gradient(circle,#fff 0 8%,#fff4a3 10% 22%,#ff9f43 35%,rgba(255,80,35,.6) 55%,transparent 72%);
- box-shadow:0 0 12px #fff,0 0 26px #ff9d36,0 0 44px rgba(168,85,247,.9);
- animation:destelloExplosion .48s ease-out forwards;
-}
-.explosionMeteorito i{
- position:absolute;left:50%;top:50%;width:5px;height:5px;border-radius:50%;
- background:linear-gradient(135deg,#fff5c2,#ff7b35 55%,#a855f7);
- box-shadow:0 0 8px #ffb347;
- transform:translate(-50%,-50%);
- animation:fragmentoExplosion .55s ease-out forwards;
-}
-.explosionMeteorito i:nth-child(3n){width:7px;height:3px;background:#d8b4fe}
-@keyframes destelloExplosion{
- 0%{opacity:1;transform:translate(-50%,-50%) scale(.25)}
- 22%{opacity:1;transform:translate(-50%,-50%) scale(3.4)}
- 100%{opacity:0;transform:translate(-50%,-50%) scale(5.2)}
-}
-@keyframes fragmentoExplosion{
- 0%{opacity:1;transform:translate(-50%,-50%) rotate(var(--angulo)) translateX(3px) scale(1)}
- 100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--angulo)) translateX(var(--distancia)) scale(.2)}
-}
-@media(prefers-reduced-motion:reduce){
- .explosionMeteorito,.explosionMeteorito i{animation-duration:.12s}
-}
-
-
-/* Refuerzo visual: explosión visible incluso al ocultarse el meteorito */
-.explosionMeteorito{position:fixed!important;z-index:2147483647!important;width:22px;height:22px;pointer-events:none!important;transform:translate(-50%,-50%);border-radius:50%;opacity:1!important;background:radial-gradient(circle,#fff 0 12%,#fff7b0 20%,#ffb12e 38%,#ff4d21 58%,rgba(168,85,247,.65) 72%,transparent 76%);box-shadow:0 0 18px 8px rgba(255,220,100,.95),0 0 38px 18px rgba(255,94,35,.8),0 0 60px 24px rgba(168,85,247,.75);animation:explosionFlashFuerte .72s ease-out forwards!important}
-.explosionMeteorito .anilloExplosion{position:absolute;left:50%;top:50%;width:20px;height:20px;border:4px solid #ffd166;border-radius:50%;box-shadow:0 0 14px #ff7b35,inset 0 0 8px #ffb347;transform:translate(-50%,-50%);animation:anilloExplosionFuerte .8s ease-out forwards}
-.explosionMeteorito i{position:absolute!important;left:50%!important;top:50%!important;width:7px!important;height:7px!important;border-radius:50%;background:linear-gradient(135deg,#fff,#ffe082 35%,#ff5722 70%,#c084fc)!important;box-shadow:0 0 10px 3px #ff9f43!important;transform:translate(-50%,-50%);animation:fragmentoExplosionFuerte .85s cubic-bezier(.1,.7,.2,1) var(--demora,0ms) forwards!important}
-@keyframes explosionFlashFuerte{0%{opacity:1;transform:translate(-50%,-50%) scale(.15)}25%{opacity:1;transform:translate(-50%,-50%) scale(2.8)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.5)}}
-@keyframes anilloExplosionFuerte{0%{opacity:1;transform:translate(-50%,-50%) scale(.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(5.8)}}
-@keyframes fragmentoExplosionFuerte{0%{opacity:1;transform:translate(-50%,-50%) rotate(var(--angulo)) translateX(5px) scale(1.25)}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--angulo)) translateX(var(--distancia)) scale(.1)}}
