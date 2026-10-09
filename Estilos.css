@@ -657,3 +657,33 @@ body{
     object-fit:cover;
   }
 }
+
+
+/* Explosión violeta al tocar un meteorito */
+.explosionMeteorito{
+ position:fixed;z-index:99999;width:12px;height:12px;pointer-events:none;
+ transform:translate(-50%,-50%);border-radius:50%;
+ background:radial-gradient(circle,#fff 0 8%,#fff4a3 10% 22%,#ff9f43 35%,rgba(255,80,35,.6) 55%,transparent 72%);
+ box-shadow:0 0 12px #fff,0 0 26px #ff9d36,0 0 44px rgba(168,85,247,.9);
+ animation:destelloExplosion .48s ease-out forwards;
+}
+.explosionMeteorito i{
+ position:absolute;left:50%;top:50%;width:5px;height:5px;border-radius:50%;
+ background:linear-gradient(135deg,#fff5c2,#ff7b35 55%,#a855f7);
+ box-shadow:0 0 8px #ffb347;
+ transform:translate(-50%,-50%);
+ animation:fragmentoExplosion .55s ease-out forwards;
+}
+.explosionMeteorito i:nth-child(3n){width:7px;height:3px;background:#d8b4fe}
+@keyframes destelloExplosion{
+ 0%{opacity:1;transform:translate(-50%,-50%) scale(.25)}
+ 22%{opacity:1;transform:translate(-50%,-50%) scale(3.4)}
+ 100%{opacity:0;transform:translate(-50%,-50%) scale(5.2)}
+}
+@keyframes fragmentoExplosion{
+ 0%{opacity:1;transform:translate(-50%,-50%) rotate(var(--angulo)) translateX(3px) scale(1)}
+ 100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--angulo)) translateX(var(--distancia)) scale(.2)}
+}
+@media(prefers-reduced-motion:reduce){
+ .explosionMeteorito,.explosionMeteorito i{animation-duration:.12s}
+}
