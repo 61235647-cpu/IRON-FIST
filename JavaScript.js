@@ -103,6 +103,16 @@ function explosionMeteorito(e){
   window.setTimeout(()=>{if(capa&&capa.parentNode)capa.remove();},800);
  }catch(err){if(capa&&capa.parentNode)capa.remove();console.warn("Efecto de explosión no disponible:",err);}
 }
+function golpear(id){
+ if(!estado.jugando||estado.pausado||estado.terminado||estado.reiniciando)return;
+ const e=$(id);if(!e||e.dataset.tocado==="1")return;
+ e.dataset.tocado="1";estado.puntos++;actualizarHUD();
+ play(id==="Meteiorito"?"Puntos_sound":"Punto2");
+ try{explosionMeteorito(e);}catch(err){console.warn(err);}
+ ocultar(e);
+ setTimeout(()=>{if(estado.jugando&&!estado.terminado)lanzar(e);},450);
+ if(estado.puntos>=5)ganarNivel1();
+}
 function reiniciarNivel1(){cancelarCuenta();clearInterval(estado.timer);clearInterval(estado.impactTimer);estado={tiempo:70,puntos:0,jugando:false,pausado:false,terminado:false,reiniciando:false,timer:null,impactTimer:null};meteoritos.forEach(id=>ocultar($(id)));actualizarHUD();$("Pausa_Pantalla").style.display="none";$("GANASTE_PANTALLA").style.display="none";$("Start").style.display="flex";pause("Fondo_Ciberpunk");}
 function cuenta(id,callback){if(cuentaActiva)return;const box=$(id),sp=box?.querySelector("span");if(!box||!sp){callback();return;}cuentaActiva=true;const btn=$("Play");if(btn)btn.disabled=true;box.style.display="block";let n=3;sp.textContent=n;cuentaTimer=setInterval(()=>{n--;sp.textContent=n>0?n:"¡YA!";if(n<=0){clearInterval(cuentaTimer);cuentaTimer=null;cuentaFinal=setTimeout(()=>{if(!cuentaActiva)return;box.style.display="none";cuentaActiva=false;cuentaFinal=null;if(btn)btn.disabled=false;callback();},350);}},800);}
 function conectar(id){const e=$(id);if(!e)return;e.addEventListener("pointerdown",()=>golpear(id));e.addEventListener("transitionend",ev=>{if(ev.propertyName==="left"&&estado.jugando&&!estado.pausado&&!estado.terminado&&!estado.reiniciando&&e.dataset.tocado!=="1"&&getComputedStyle(e).visibility!=="hidden"&&Number(getComputedStyle(e).opacity)>0){perderNivel1("Un meteorito llegó al final de su recorrido.");}});}
