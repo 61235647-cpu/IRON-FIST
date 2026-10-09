@@ -74,7 +74,7 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 <div class="Contenedor_Mensaje_Star" id="Contenedor_Mensaje_Star">
 <h1 class="Texo" id="Texo">¿LISTO PARA SALVAR<br>EL MUNDO?<br>NIVEL 1</h1>
 <div id="Dificultad" class="dificultad-cosmica"><span class="Dificultad_emblema">✦</span><div><small>CLASIFICACIÓN DE MISIÓN</small><h1 class="Pollo">UMBRAL ESTELAR</h1></div><span class="Dificultad_emblema">✦</span></div>
-<div class="Play" id="Play">JUGAR</div>
+<button type="button" class="Play" id="Play" onclick="window.jugarNivel1 && window.jugarNivel1()">JUGAR</button>
 </div>
 <div id="Contenedor_contador"><span id="RGB"></span></div>
 </div>
@@ -100,7 +100,7 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 <div class="Startlvl2" id="Startlvl2">
 <h1 class="Texolvl2" id="Texolvl2">¿LISTO PARA SALVAR<br>EL MUNDO?<br>NIVEL 2</h1>
 <div id="Dificultadlvl2" class="dificultad-cosmica"><span class="Dificultad_emblema">✧</span><div><small>CLASIFICACIÓN DE MISIÓN</small><h1>DOMINIO GALÁCTICO</h1></div><span class="Dificultad_emblema">✧</span></div>
-<div class="Playlvl2" id="Playlvl2">JUGAR</div>
+<button type="button" class="Playlvl2" id="Playlvl2" onclick="window.jugarNivel2 && window.jugarNivel2()">JUGAR</button>
 <div id="Contenedor_contadorlvl2"><span id="RGBlvl2"></span></div>
 </div>
 <div class="Pausa_Pantallalvl2" id="Pausa_Pantallalvl2"><h1 class="Mensaje_Pauselvl2">JUEGO EN PAUSA</h1></div>
@@ -124,7 +124,7 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 <div class="Limitelvl3"></div>
 <div class="Startlvl3" id="Startlvl3">
 <h1 class="Textolvl3" id="Textolvl3">¿LISTO PARA SALVAR<br>EL MUNDO?<br>NIVEL 3</h1>
-<div class="Playlvl3" id="Playlvl3">JUGAR</div>
+<button type="button" class="Playlvl3" id="Playlvl3" onclick="window.jugarNivel3 && window.jugarNivel3()">JUGAR</button>
 <div class="Dificultadlvl3 dificultad-cosmica" id="Dificultadlvl3"><span class="Dificultad_emblema">✹</span><div><small>CLASIFICACIÓN DE MISIÓN</small><h1>TRONO DEL COSMOS</h1></div><span class="Dificultad_emblema">✹</span></div>
 <div id="Contenedor_contadorlvl3"><span id="RGBlvl3"></span></div>
 </div>
@@ -139,7 +139,7 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 </section>
 </section>
 
-<div class="NEXT" id="NEXT"><h2>SIGUIENTE NIVEL <i class="fas fa-arrow-right"></i></h2></div>
+<div class="NEXT" id="NEXT" style="display:none" aria-hidden="true"><h2>SIGUIENTE NIVEL <i class="fas fa-arrow-right"></i></h2></div>
 </section>
 <script src="Ejecucion2.js"></script>
 <script src="Ejecucion3.js"></script>
