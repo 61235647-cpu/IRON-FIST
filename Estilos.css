@@ -687,3 +687,12 @@ body{
 @media(prefers-reduced-motion:reduce){
  .explosionMeteorito,.explosionMeteorito i{animation-duration:.12s}
 }
+
+
+/* Refuerzo visual: explosión visible incluso al ocultarse el meteorito */
+.explosionMeteorito{position:fixed!important;z-index:2147483647!important;width:22px;height:22px;pointer-events:none!important;transform:translate(-50%,-50%);border-radius:50%;opacity:1!important;background:radial-gradient(circle,#fff 0 12%,#fff7b0 20%,#ffb12e 38%,#ff4d21 58%,rgba(168,85,247,.65) 72%,transparent 76%);box-shadow:0 0 18px 8px rgba(255,220,100,.95),0 0 38px 18px rgba(255,94,35,.8),0 0 60px 24px rgba(168,85,247,.75);animation:explosionFlashFuerte .72s ease-out forwards!important}
+.explosionMeteorito .anilloExplosion{position:absolute;left:50%;top:50%;width:20px;height:20px;border:4px solid #ffd166;border-radius:50%;box-shadow:0 0 14px #ff7b35,inset 0 0 8px #ffb347;transform:translate(-50%,-50%);animation:anilloExplosionFuerte .8s ease-out forwards}
+.explosionMeteorito i{position:absolute!important;left:50%!important;top:50%!important;width:7px!important;height:7px!important;border-radius:50%;background:linear-gradient(135deg,#fff,#ffe082 35%,#ff5722 70%,#c084fc)!important;box-shadow:0 0 10px 3px #ff9f43!important;transform:translate(-50%,-50%);animation:fragmentoExplosionFuerte .85s cubic-bezier(.1,.7,.2,1) var(--demora,0ms) forwards!important}
+@keyframes explosionFlashFuerte{0%{opacity:1;transform:translate(-50%,-50%) scale(.15)}25%{opacity:1;transform:translate(-50%,-50%) scale(2.8)}100%{opacity:0;transform:translate(-50%,-50%) scale(4.5)}}
+@keyframes anilloExplosionFuerte{0%{opacity:1;transform:translate(-50%,-50%) scale(.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(5.8)}}
+@keyframes fragmentoExplosionFuerte{0%{opacity:1;transform:translate(-50%,-50%) rotate(var(--angulo)) translateX(5px) scale(1.25)}100%{opacity:0;transform:translate(-50%,-50%) rotate(var(--angulo)) translateX(var(--distancia)) scale(.1)}}
