@@ -17,33 +17,32 @@ function detener(){ids.forEach(id=>{const e=$(id);if(e)e.dataset.tocado="1";});}
 function perderNivel2(m){if(!s.jugando||s.terminado||s.reiniciando)return;s.reiniciando=true;s.pausado=true;s.tiempo=60;s.puntos=0;hud();ids.forEach(id=>ocultar($(id)));play("Perdiste_sound");if(window.Swal)Swal.fire({title:"¡Defensa fallida!",text:m+" La ronda se reiniciará.",icon:"warning",confirmButtonText:"Continuar",background:"#07101c",color:"#fff"});setTimeout(()=>{if(s.jugando&&!s.terminado){s.reiniciando=false;s.pausado=false;iniciarMeteoritos();}},900);}
 function ganar(){s.terminado=true;s.jugando=false;clearInterval(s.timer);clearInterval(s.impact);detener();ids.forEach(id=>ocultar($(id)));pause("Fondo_Ciberpunk");play("Triunfo");$("GanastePantallaLvL2").style.display="flex";$("NEXT").style.display="block";$("NEXT").style.pointerEvents="auto";$("NEXT").style.zIndex="99999";}
 function explosionMeteorito(e){
- // El efecto es decorativo: nunca debe impedir registrar un impacto.
+ // Efecto opcional: si una animación falla, el golpe del jugador sigue funcionando.
+ let capa=null;
  try{
   if(!e||!document.body)return;
-  const r=e.getBoundingClientRect();
-  const capa=document.createElement("div");
+  const r=e.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
+  capa=document.createElement("div");
   capa.setAttribute("aria-hidden","true");
   capa.style.cssText="position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:2147483647";
-  const x=r.left+r.width/2,y=r.top+r.height/2;
   const flash=document.createElement("div");
-  flash.style.cssText="position:absolute;left:"+x+"px;top:"+y+"px;width:22px;height:22px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff 0%,#fff4a3 22%,#ffae2e 48%,#ff4a1c 68%,transparent 75%);box-shadow:0 0 25px 12px rgba(255,150,30,.9)";
-  capa.appendChild(flash);
+  flash.style.cssText="position:absolute;left:"+x+"px;top:"+y+"px;width:24px;height:24px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff 0%,#fff4a3 22%,#ffae2e 48%,#ff4a1c 68%,transparent 75%);box-shadow:0 0 25px 12px rgba(255,150,30,.9)";
   const ring=document.createElement("div");
   ring.style.cssText="position:absolute;left:"+x+"px;top:"+y+"px;width:18px;height:18px;border:4px solid #ffd166;border-radius:50%;transform:translate(-50%,-50%);box-sizing:border-box";
-  capa.appendChild(ring);
+  capa.appendChild(flash);capa.appendChild(ring);
+  const parts=[];
   for(let i=0;i<14;i++){
-   const a=Math.PI*2*i/14,d=45+(i%3)*18;
-   const p=document.createElement("i");
-   p.style.cssText="position:absolute;left:"+x+"px;top:"+y+"px;width:7px;height:7px;border-radius:50%;background:"+(i%2?"#ff672f":"#d8a5ff")+";box-shadow:0 0 9px 3px rgba(255,130,40,.8);transform:translate(-50%,-50%)";
-   capa.appendChild(p);
-   if(p.animate)p.animate([{transform:"translate(-50%,-50%) scale(1)",opacity:1},{transform:"translate(calc(-50% + "+(Math.cos(a)*d)+"px),calc(-50% + "+(Math.sin(a)*d)+"px) ) scale(.1)",opacity:0}],{duration:650,fill:"forwards"});
+   const a=Math.PI*2*i/14,d=45+(i%3)*18,p=document.createElement("i");
+   p.style.cssText="position:absolute;left:"+x+"px;top:"+y+"px;width:7px;height:7px;border-radius:50%;background:"+(i%2?"#ff672f":"#d8a5ff")+";box-shadow:0 0 9px 3px rgba(255,130,40,.8)";
+   capa.appendChild(p);parts.push({el:p,endX:x+Math.cos(a)*d,endY:y+Math.sin(a)*d});
   }
   document.body.appendChild(capa);
-  if(flash.animate)flash.animate([{transform:"translate(-50%,-50%) scale(.2)",opacity:1},{transform:"translate(-50%,-50%) scale(4)",opacity:1,offset:.3},{transform:"translate(-50%,-50%) scale(6)",opacity:0}],{duration:550,fill:"forwards"});
-  if(ring.animate)ring.animate([{transform:"translate(-50%,-50%) scale(.2)",opacity:1},{transform:"translate(-50%,-50%) scale(6)",opacity:0}],{duration:650,fill:"forwards"});
-  window.setTimeout(()=>capa.remove(),800);
- }catch(err){console.warn("No se pudo mostrar la explosión; el impacto continuará.",err);}
-}function pausa(){if(!s.jugando||s.terminado)return;s.pausado=!s.pausado;$("Pausa_Pantallalvl2").style.display=s.pausado?"flex":"none";if(s.pausado){congelarMeteoritos(ids);pause("Fondo_Ciberpunk");}else{reanudarMeteoritos(ids);play("Fondo_Ciberpunk");}}
+  try{if(flash.animate)flash.animate([{transform:"translate(-50%,-50%) scale(.2)",opacity:1},{transform:"translate(-50%,-50%) scale(4)",opacity:1,offset:.3},{transform:"translate(-50%,-50%) scale(6)",opacity:0}],{duration:550,fill:"forwards"});}catch(_){}
+  try{if(ring.animate)ring.animate([{transform:"translate(-50%,-50%) scale(.2)",opacity:1},{transform:"translate(-50%,-50%) scale(6)",opacity:0}],{duration:650,fill:"forwards"});}catch(_){}
+  parts.forEach(v=>{try{if(v.el.animate)v.el.animate([{left:x+"px",top:y+"px",opacity:1},{left:v.endX+"px",top:v.endY+"px",opacity:0}],{duration:650,fill:"forwards"});}catch(_){}});
+  window.setTimeout(()=>{if(capa&&capa.parentNode)capa.remove();},800);
+ }catch(err){if(capa&&capa.parentNode)capa.remove();console.warn("Efecto de explosión no disponible:",err);}
+}
 function reiniciar(){cancelarCuenta();clearInterval(s.timer);clearInterval(s.impact);s={tiempo:60,puntos:0,jugando:false,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};hud();ids.forEach(id=>ocultar($(id)));$("Pausa_Pantallalvl2").style.display="none";$("GanastePantallaLvL2").style.display="none";$("Startlvl2").style.display="flex";pause("Fondo_Ciberpunk");}
 function cuenta(){if(cuentaActiva)return;const box=$("Contenedor_contadorlvl2"),sp=$("RGBlvl2"),btn=$("Playlvl2");if(!box||!sp)return;cuentaActiva=true;if(btn)btn.disabled=true;let n=3;box.style.display="block";sp.textContent=n;cuentaTimer=setInterval(()=>{n--;sp.textContent=n>0?n:"¡YA!";if(n<=0){clearInterval(cuentaTimer);cuentaTimer=null;cuentaFinal=setTimeout(()=>{if(!cuentaActiva)return;box.style.display="none";cuentaActiva=false;cuentaFinal=null;if(btn)btn.disabled=false;iniciar();},350);}},800);}
 window.nivel2Terminado=()=>s.terminado;
