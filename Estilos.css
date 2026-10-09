@@ -629,3 +629,31 @@ body{
 @media(max-width:760px){
   .Imgane_metiorito{width:min(340px,78vw);max-height:28vh;margin:14px auto 0;padding:7px}
 }
+
+
+/* La imagen ocupa todo el marco morado, sin bordes vacíos */
+.Imgane_metiorito{
+  display:block;
+  width:min(560px,44vw);
+  height:clamp(280px,42vh,440px);
+  max-height:none;
+  object-fit:cover;
+  object-position:center;
+  margin:18px auto 0;
+  padding:0;
+  overflow:hidden;
+  border:1px solid rgba(192,132,252,.65);
+  border-radius:18px;
+  background:#1c0a41;
+  box-shadow:0 0 20px rgba(139,92,246,.28),0 0 42px rgba(109,40,217,.2);
+}
+@media(max-width:760px){
+  .Imgane_metiorito{
+    width:min(88vw,460px);
+    height:clamp(250px,38vh,360px);
+    max-height:none;
+    margin:14px auto 0;
+    padding:0;
+    object-fit:cover;
+  }
+}
