@@ -28,40 +28,11 @@ function iniciarMeteoritos(){ids.forEach((id,i)=>{const e=$(id);if(e){ocultar(e)
 function detener(){ids.forEach(id=>{const e=$(id);if(e)e.dataset.tocado="1";});}
 function perderNivel3(m){if(!s.jugando||s.terminado||s.reiniciando)return;s.reiniciando=true;s.pausado=true;s.tiempo=50;s.puntos=0;hud();ids.forEach(id=>ocultar($(id)));play("Perdiste_sound");if(window.Swal)Swal.fire({title:"¡Defensa fallida!",text:m+" La ronda se reiniciará.",icon:"warning",confirmButtonText:"Continuar",background:"#07101c",color:"#fff"});setTimeout(()=>{if(s.jugando&&!s.terminado){s.reiniciando=false;s.pausado=false;iniciarMeteoritos();}},900);}
 function victoria(){s.terminado=true;s.jugando=false;clearInterval(s.timer);clearInterval(s.impact);detener();ids.forEach(id=>ocultar($(id)));pause("Fondo_Ciberpunk");play("Triunfo");play("Musica_Final");$("Pantalla_Ovnislvl3").style.display="flex";$("Pantalla_Nodrizalvl3").style.display="flex";$("Pantalla_Ovnis2lvl3").style.display="flex";$("Pantalla_creditoslvl3").style.display="block";$("Creditoslvl3").style.display="block";$("Proximolvl3").style.display="block";if(window.Swal)Swal.fire({title:"¡MISIÓN COMPLETADA!",html:"Has destruido los <b>5 meteoritos</b> del Nivel 3.<br><br>La defensa del planeta ha sido completada.",icon:"success",confirmButtonText:"Excelente",background:"#07101c",color:"#fff"});}
-function explosionMeteorito(e){
- // Efecto opcional: si una animación falla, el golpe del jugador sigue funcionando.
- let capa=null;
- try{
-  if(!e||!document.body)return;
-  const r=e.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;
-  capa=document.createElement("div");
-  capa.setAttribute("aria-hidden","true");
-  capa.style.cssText="position:fixed;inset:0;width:100vw;height:100vh;overflow:hidden;pointer-events:none;z-index:2147483647";
-  const flash=document.createElement("div");
-  flash.style.cssText="position:absolute;left:"+x+"px;top:"+y+"px;width:24px;height:24px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff 0%,#fff4a3 22%,#ffae2e 48%,#ff4a1c 68%,transparent 75%);box-shadow:0 0 25px 12px rgba(255,150,30,.9)";
-  const ring=document.createElement("div");
-  ring.style.cssText="position:absolute;left:"+x+"px;top:"+y+"px;width:18px;height:18px;border:4px solid #ffd166;border-radius:50%;transform:translate(-50%,-50%);box-sizing:border-box";
-  capa.appendChild(flash);capa.appendChild(ring);
-  const parts=[];
-  for(let i=0;i<14;i++){
-   const a=Math.PI*2*i/14,d=45+(i%3)*18,p=document.createElement("i");
-   p.style.cssText="position:absolute;left:"+x+"px;top:"+y+"px;width:7px;height:7px;border-radius:50%;background:"+(i%2?"#ff672f":"#d8a5ff")+";box-shadow:0 0 9px 3px rgba(255,130,40,.8)";
-   capa.appendChild(p);parts.push({el:p,endX:x+Math.cos(a)*d,endY:y+Math.sin(a)*d});
-  }
-  document.body.appendChild(capa);
-  try{if(flash.animate)flash.animate([{transform:"translate(-50%,-50%) scale(.2)",opacity:1},{transform:"translate(-50%,-50%) scale(4)",opacity:1,offset:.3},{transform:"translate(-50%,-50%) scale(6)",opacity:0}],{duration:550,fill:"forwards"});}catch(_){}
-  try{if(ring.animate)ring.animate([{transform:"translate(-50%,-50%) scale(.2)",opacity:1},{transform:"translate(-50%,-50%) scale(6)",opacity:0}],{duration:650,fill:"forwards"});}catch(_){}
-  parts.forEach(v=>{try{if(v.el.animate)v.el.animate([{left:x+"px",top:y+"px",opacity:1},{left:v.endX+"px",top:v.endY+"px",opacity:0}],{duration:650,fill:"forwards"});}catch(_){}});
-  window.setTimeout(()=>{if(capa&&capa.parentNode)capa.remove();},800);
- }catch(err){if(capa&&capa.parentNode)capa.remove();console.warn("Efecto de explosión no disponible:",err);}
-}
 function golpe(id){
  if(!s.jugando||s.pausado||s.terminado||s.reiniciando)return;
  const e=$(id);if(!e||e.dataset.tocado==="1")return;
  e.dataset.tocado="1";s.puntos++;hud();
  play(id===ids[0]?"Puntos_sound":id===ids[1]?"Punto2":id===ids[2]?"Punto3":"Punto4");
- e.classList.add("impactoMeteorito");
- try{explosionMeteorito(e);}catch(err){console.warn(err);}
  ocultar(e);
  setTimeout(()=>{e.classList.remove("impactoMeteorito");if(s.jugando&&!s.terminado)lanzar(e);},450);
  if(s.puntos>=5)victoria();
