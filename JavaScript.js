@@ -82,10 +82,12 @@ function pausarNivel1(){if(!estado.jugando||estado.terminado)return;estado.pausa
 function reiniciarNivel1(){cancelarCuenta();clearInterval(estado.timer);clearInterval(estado.impactTimer);estado={tiempo:70,puntos:0,jugando:false,pausado:false,terminado:false,reiniciando:false,timer:null,impactTimer:null};meteoritos.forEach(id=>ocultar($(id)));actualizarHUD();$("Pausa_Pantalla").style.display="none";$("GANASTE_PANTALLA").style.display="none";$("Start").style.display="flex";pause("Fondo_Ciberpunk");}
 function cuenta(id,callback){if(cuentaActiva)return;const box=$(id),sp=box?.querySelector("span");if(!box||!sp){callback();return;}cuentaActiva=true;const btn=$("Play");if(btn)btn.disabled=true;box.style.display="block";let n=3;sp.textContent=n;cuentaTimer=setInterval(()=>{n--;sp.textContent=n>0?n:"¡YA!";if(n<=0){clearInterval(cuentaTimer);cuentaTimer=null;cuentaFinal=setTimeout(()=>{if(!cuentaActiva)return;box.style.display="none";cuentaActiva=false;cuentaFinal=null;if(btn)btn.disabled=false;callback();},350);}},800);}
 function conectar(id){const e=$(id);if(!e)return;e.addEventListener("pointerdown",()=>golpear(id));e.addEventListener("transitionend",ev=>{if(ev.propertyName==="left"&&estado.jugando&&!estado.pausado&&!estado.terminado&&!estado.reiniciando&&e.dataset.tocado!=="1"&&getComputedStyle(e).visibility!=="hidden"&&Number(getComputedStyle(e).opacity)>0){perderNivel1("Un meteorito llegó al final de su recorrido.");}});}
-function configurar(){barra("Puntaje","BarraProgresoLvl1","ProgresoInternoLvl1");window.jugarNivel1=()=>cuenta("Contenedor_contador",iniciarNivel1);$("Play")?.addEventListener("click",()=>cuenta("Contenedor_contador",iniciarNivel1));$("Pause")?.addEventListener("click",pausarNivel1);$("Reiniciar")?.addEventListener("click",reiniciarNivel1);meteoritos.forEach(conectar);$("NEXT").style.display="none";$("NEXT").style.pointerEvents="none";$("NEXT").setAttribute("aria-hidden","true");actualizarHUD();}
-window.iniciarNivel1=iniciarNivel1;
+function configurar(){barra("Puntaje","BarraProgresoLvl1","ProgresoInternoLvl1");$("Pause")?.addEventListener("click",pausarNivel1);$("Reiniciar")?.addEventListener("click",reiniciarNivel1);meteoritos.forEach(conectar);$("NEXT").style.display="none";$("NEXT").style.pointerEvents="none";$("NEXT").setAttribute("aria-hidden","true");actualizarHUD();}
+window.iniciarNivel1=()=>{cancelarCuenta();iniciarNivel1();};
+window.jugarNivel1=()=>cuenta("Contenedor_contador",iniciarNivel1);
 window.nivel1Terminado=()=>estado.terminado;
-document.addEventListener("DOMContentLoaded",()=>{configurarNarracion();configurar();});
+function inicializarNivel1(){configurarNarracion();configurar();}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",inicializarNivel1,{once:true});else inicializarNivel1();
 })();
 /* Navegación única y segura entre niveles */
 function avanzarNivelSeguro(){
