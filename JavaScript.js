@@ -76,7 +76,24 @@ function iniciarMeteoritos(){meteoritos.forEach((id,i)=>{const e=$(id);if(!e)ret
 function detenerMeteoritos(){meteoritos.forEach(id=>{const e=$(id);if(e)e.dataset.tocado="1";});}
 function perderNivel1(mensaje){if(!estado.jugando||estado.terminado||estado.reiniciando)return;estado.reiniciando=true;estado.tiempo=70;estado.puntos=0;actualizarHUD();meteoritos.forEach(id=>ocultar($(id)));play("Perdiste_sound");if(window.Swal)Swal.fire({title:"¡Defensa fallida!",text:mensaje+" La ronda se reiniciará.",icon:"warning",confirmButtonText:"Continuar",background:"#07101c",color:"#fff"});setTimeout(()=>{if(estado.jugando&&!estado.terminado){estado.reiniciando=false;iniciarMeteoritos();}},900);}
 function ganarNivel1(){estado.terminado=true;estado.jugando=false;clearInterval(estado.timer);clearInterval(estado.impactTimer);detenerMeteoritos();meteoritos.forEach(id=>ocultar($(id)));pause("Fondo_Ciberpunk");play("Triunfo");$("GANASTE_PANTALLA").style.display="flex";$("NEXT").style.display="block";if(window.Swal)Swal.fire({title:"¡Nivel 1 completado!",text:"Has destruido 15 meteoritos. Continúa con el Nivel 2.",icon:"success",confirmButtonText:"Continuar",background:"#07101c",color:"#fff"});}
-function golpear(id){if(!estado.jugando||estado.pausado||estado.terminado||estado.reiniciando)return;const e=$(id);if(!e||e.dataset.tocado==="1")return;e.dataset.tocado="1";estado.puntos++;actualizarHUD();play(id==="Meteiorito"?"Puntos_sound":"Punto2");ocultar(e);setTimeout(()=>{if(estado.jugando&&!estado.terminado)lanzar(e);},450);if(estado.puntos>=5)ganarNivel1();}
+function explosionMeteorito(e){
+ if(!e)return;
+ const r=e.getBoundingClientRect();
+ const fx=document.createElement("div");
+ fx.className="explosionMeteorito";
+ fx.style.left=(r.left+r.width/2)+"px";
+ fx.style.top=(r.top+r.height/2)+"px";
+ for(let i=0;i<12;i++){
+  const p=document.createElement("i");
+  p.style.setProperty("--angulo",(i*30)+"deg");
+  p.style.setProperty("--distancia",(24+(i%3)*12)+"px");
+  fx.appendChild(p);
+ }
+ document.body.appendChild(fx);
+ fx.addEventListener("animationend",()=>fx.remove(),{once:true});
+ setTimeout(()=>fx.remove(),750);
+}
+function golpear(id){if(!estado.jugando||estado.pausado||estado.terminado||estado.reiniciando)return;const e=$(id);if(!e||e.dataset.tocado==="1")return;e.dataset.tocado="1";estado.puntos++;actualizarHUD();play(id==="Meteiorito"?"Puntos_sound":"Punto2");explosionMeteorito(e);ocultar(e);setTimeout(()=>{if(estado.jugando&&!estado.terminado)lanzar(e);},450);if(estado.puntos>=5)ganarNivel1();}
 function iniciarNivel1(){estado={tiempo:70,puntos:0,jugando:true,pausado:false,terminado:false,timer:null,impactTimer:null};actualizarHUD();$("Start").style.display="none";$("Pausa_Pantalla").style.display="none";$("GANASTE_PANTALLA").style.display="none";play("Fondo_Ciberpunk");iniciarMeteoritos();estado.timer=setInterval(()=>{if(!estado.pausado&&estado.jugando&&!estado.reiniciando){estado.tiempo--;actualizarHUD();if(estado.tiempo<=0)perderNivel1("Se agotó el tiempo.")}},1000);estado.impactTimer=setInterval(()=>{if(estado.pausado||estado.reiniciando||!estado.jugando||estado.terminado)return;const linea=$("NIVEL_01")?.querySelector(".Limite");if(!linea)return;const x=linea.getBoundingClientRect().left;for(const id of meteoritos){const e=$(id);if(!e||e.dataset.tocado==="1"||getComputedStyle(e).visibility==="hidden"||Number(getComputedStyle(e).opacity)===0)continue;const r=e.getBoundingClientRect();if(r.left+r.width*0.5>=x){perderNivel1("Un meteorito llegó a la línea de impacto.");return;}}},40);}
 function pausarNivel1(){if(!estado.jugando||estado.terminado)return;estado.pausado=!estado.pausado;$("Pausa_Pantalla").style.display=estado.pausado?"flex":"none";if(estado.pausado){congelarMeteoritos(meteoritos);pause("Fondo_Ciberpunk");}else{reanudarMeteoritos(meteoritos);play("Fondo_Ciberpunk");}}
 function reiniciarNivel1(){cancelarCuenta();clearInterval(estado.timer);clearInterval(estado.impactTimer);estado={tiempo:70,puntos:0,jugando:false,pausado:false,terminado:false,reiniciando:false,timer:null,impactTimer:null};meteoritos.forEach(id=>ocultar($(id)));actualizarHUD();$("Pausa_Pantalla").style.display="none";$("GANASTE_PANTALLA").style.display="none";$("Start").style.display="flex";pause("Fondo_Ciberpunk");}
