@@ -55,6 +55,17 @@ function explosionMeteorito(e){
   window.setTimeout(()=>{if(capa&&capa.parentNode)capa.remove();},800);
  }catch(err){if(capa&&capa.parentNode)capa.remove();console.warn("Efecto de explosión no disponible:",err);}
 }
+function golpe(id){
+ if(!s.jugando||s.pausado||s.terminado||s.reiniciando)return;
+ const e=$(id);if(!e||e.dataset.tocado==="1")return;
+ e.dataset.tocado="1";s.puntos++;hud();
+ play(id===ids[0]?"Puntos_sound":id===ids[1]?"Punto2":id===ids[2]?"Punto3":"Punto4");
+ e.classList.add("impactoMeteorito");
+ try{explosionMeteorito(e);}catch(err){console.warn(err);}
+ ocultar(e);
+ setTimeout(()=>{e.classList.remove("impactoMeteorito");if(s.jugando&&!s.terminado)lanzar(e);},450);
+ if(s.puntos>=5)victoria();
+}
 function reiniciar(){cancelarCuenta();clearInterval(s.timer);clearInterval(s.impact);s={tiempo:50,puntos:0,jugando:false,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};hud();ids.forEach(id=>ocultar($(id)));$("Pausa_Pantallalvl3").style.display="none";$("Pantalla_Ovnislvl3").style.display="none";$("Pantalla_Nodrizalvl3").style.display="none";$("Pantalla_Ovnis2lvl3").style.display="none";$("Pantalla_creditoslvl3").style.display="none";$("Creditoslvl3").style.display="none";$("Proximolvl3").style.display="none";$("Startlvl3").style.display="flex";pause("Fondo_Ciberpunk");pause("Musica_Final");}
 function cuenta(){if(cuentaActiva)return;const box=$("Contenedor_contadorlvl3"),sp=$("RGBlvl3"),btn=$("Playlvl3");if(!box||!sp)return;cuentaActiva=true;if(btn)btn.disabled=true;let n=3;box.style.display="block";sp.textContent=n;cuentaTimer=setInterval(()=>{n--;sp.textContent=n>0?n:"¡YA!";if(n<=0){clearInterval(cuentaTimer);cuentaTimer=null;cuentaFinal=setTimeout(()=>{if(!cuentaActiva)return;box.style.display="none";cuentaActiva=false;cuentaFinal=null;if(btn)btn.disabled=false;iniciar();},350);}},800);}
 window.prepararNivel3=()=>{cancelarCuenta();s={tiempo:50,puntos:0,jugando:false,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};hud();$("Startlvl3").style.display="flex";$("Pausa_Pantallalvl3").style.display="none";$("Pantalla_Ovnislvl3").style.display="none";$("Pantalla_Nodrizalvl3").style.display="none";$("Pantalla_Ovnis2lvl3").style.display="none";$("Pantalla_creditoslvl3").style.display="none";$("Creditoslvl3").style.display="none";$("Proximolvl3").style.display="none";ids.forEach(id=>ocultar($(id)));};
