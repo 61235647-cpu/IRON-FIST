@@ -24,10 +24,10 @@
 <section id="Reglas">
 <div class="Reglas_encabezado"><span class="Reglas_etiqueta">✦ PROTOCOLO DE SUPERVIVENCIA ✦</span><h1 class="Titulo_Reglas">GUÍA DEL<br><span>DEFENSOR ESTELAR</span></h1><p class="Reglas_subtitulo">La Tierra cuenta contigo. Aprende las reglas y prepárate para la batalla.</p></div>
 <img src="IMG/JUEGO.svg" class="Img_reglas" alt="Nave y meteoritos en el espacio">
-<div class="Reglas_estilos" id="R1"><span class="Regla_icono">☄</span><h3>01 · DESTRUYE</h3><p>Golpea los 5 meteoritos de cada nivel antes de que crucen la línea roja y amenacen la Tierra.</p><span class="Regla_pista">OBJETIVO: 5 IMPACTOS</span></div>
-<div class="Reglas_estilos" id="R2"><span class="Regla_icono">◷</span><h3>02 · NO PIERDAS TIEMPO</h3><p>Completa la misión antes de que el cronómetro llegue a cero. Cada segundo cuenta.</p><span class="Regla_pista">VIGILA EL CRONÓMETRO</span></div>
-<div class="Reglas_estilos" id="R3_4"><span class="Regla_icono">⛨</span><h3>03 · PROTEGE LA TIERRA</h3><p>Si un meteorito alcanza la línea roja, la ronda se reinicia. Mantente alerta y vuelve a intentarlo.</p><span class="Regla_pista">NO DEJES PASAR NINGUNO</span></div>
-<div class="Reglas_pie"><span>✧ 3 SECTORES · 3 PRUEBAS · UNA SOLA TIERRA ✧</span><div class="Listo" onclick="Mover_2()">INICIAR MISIÓN <span>➜</span></div></div>
+<div class="Reglas_estilos" id="R1"><span class="Regla_icono">☄</span><h3>01 · DESTRUYE</h3><p>Destruye 10 meteoritos en cada nivel antes de que crucen la línea roja. Los azules son rápidos, los ondulantes se mueven en zigzag y los blindados aguantan 2 impactos.</p><span class="Regla_pista">OBJETIVO: 10 IMPACTOS</span></div>
+<div class="Reglas_estilos" id="R2"><span class="Regla_icono">◷</span><h3>02 · NO PIERDAS TIEMPO</h3><p>Completa la misión antes de que el cronómetro llegue a cero. ¡Encadena 3 aciertos seguidos (COMBO) y ganas +2 segundos!</p><span class="Regla_pista">COMBOS = TIEMPO EXTRA</span></div>
+<div class="Reglas_estilos" id="R3_4"><span class="Regla_icono">⛨</span><h3>03 · PROTEGE LA TIERRA</h3><p>La Tierra tiene 3 vidas ❤. Cada meteorito que cruce la línea roja te quita una; si se acaban, la ronda se reinicia. En el Nivel 3 te espera la Nodriza y sus rayos láser.</p><span class="Regla_pista">3 VIDAS · CUIDADO CON LA NODRIZA</span></div>
+<div class="Reglas_pie"><span>✧ 3 SECTORES · 30 METEORITOS · 1 JEFE FINAL ✧</span><div class="Listo" onclick="Mover_2()">INICIAR MISIÓN <span>➜</span></div></div>
 </section>
 
 <section id="Seccion_2">
@@ -48,8 +48,8 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 
 <div id="NIVEL_01">
 <div class="Cabezera">
-<div class="Tiempo"><h3>TIEMPO</h3><span id="Tiempo">70</span></div>
-<div class="Puntaje"><h3>PUNTAJE</h3><span id="Puntaje">0 / 15</span></div>
+<div class="Tiempo"><h3>TIEMPO</h3><span id="Tiempo">40</span></div>
+<div class="Puntaje"><h3>PUNTAJE</h3><span id="Puntaje">0 / 10</span></div>
 <div class="Pause" id="Pause"><h3>PAUSAR / CONTINUAR</h3></div><div class="Reiniciar" id="Reiniciar"><h3>REINICIAR</h3></div>
 </div>
 <div class="Contenedor">
@@ -63,67 +63,55 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 <audio id="Triunfo" src="fanfare-triumphal.mp3" preload="auto"></audio>
 <audio id="Ganaste" src="Mensaje_Ganaste.mp3" preload="auto"></audio>
 <audio id="Musica_Final" src="Musica_Epica_Final.mp3" preload="auto"></audio>
-<img src="IMG/Metiorito.svg" class="Meteiorito" id="Meteiorito" alt="Meteorito">
-<img src="IMG/Metiorito.svg" class="Meteiorito" id="Meteiorito2" alt="Meteorito">
-<img src="IMG/Metiorito.svg" class="Meteiorito" id="Meteiorito3" alt="Meteorito">
-<img src="IMG/Metiorito.svg" class="Meteiorito" id="Meteiorito4" alt="Meteorito">
-<img src="IMG/Metiorito.svg" class="Meteiorito" id="Meteiorito5" alt="Meteorito">
 <img src="IMG/planeta_tierra.svg" class="Planeta" alt="Tierra">
 <div class="Limite"></div>
 <div class="Start" id="Start">
 <div class="Contenedor_Mensaje_Star" id="Contenedor_Mensaje_Star">
 <h1 class="Texo" id="Texo">¿LISTO PARA SALVAR<br>EL MUNDO?<br>NIVEL 1</h1>
 <div id="Dificultad" class="dificultad-cosmica"><span class="Dificultad_emblema">✦</span><div><small>CLASIFICACIÓN DE MISIÓN</small><h1 class="Pollo">UMBRAL ESTELAR</h1></div><span class="Dificultad_emblema">✦</span></div>
+<p class="Consejo_nivel">❤ 3 VIDAS · ☄ ENCADENA ACIERTOS PARA GANAR TIEMPO EXTRA · LOS COMETAS AZULES SON RÁPIDOS</p>
 <button type="button" class="Play" id="Play" onclick="window.iniciarNivel1 && window.iniciarNivel1()">JUGAR</button>
 </div>
 <div id="Contenedor_contador"><span id="RGB"></span></div>
 </div>
 <div class="Pausa_Pantalla" id="Pausa_Pantalla"><h1 class="Mensaje_Pause">JUEGO EN PAUSA</h1></div>
-<div class="GANASTE_PANTALLA" id="GANASTE_PANTALLA"><h1>¡NIVEL 1 COMPLETADO!</h1><h3>Has defendido la Tierra y destruido los 5 meteoritos. Continúa con el Nivel 2.</h3></div>
+<div class="GANASTE_PANTALLA" id="GANASTE_PANTALLA"><h1>¡NIVEL 1 COMPLETADO!</h1><h3>Has defendido la Tierra y destruido los 10 meteoritos. Continúa con el Nivel 2.</h3></div>
 </div>
 </div>
 
 <section id="NIVEL_02">
 <div class="Cabezeralvl2">
-<div class="Tiempolvl2"><h3>TIEMPO</h3><span id="Tiempolvl2">60</span></div>
+<div class="Tiempolvl2"><h3>TIEMPO</h3><span id="Tiempolvl2">34</span></div>
 <div class="Puntajelvl2"><h3>PUNTAJE</h3><span id="Puntajelvl2">0 / 10</span></div>
 <div class="Pauselvl2" id="Pauselvl2"><h3>PAUSAR / CONTINUAR</h3></div><div class="Reiniciarlvl2" id="Reiniciarlvl2"><h3>REINICIAR</h3></div>
 </div>
 <div class="Contenedorlvl2">
-<img src="IMG/Metiorito.svg" class="Meteioritolvl2" id="Meteioritolvl2" alt="Meteorito">
-<img src="IMG/Metiorito.svg" class="Meteioritolvl2" id="Meteiorito2lvl2" alt="Meteorito">
-<img src="IMG/Metiorito.svg" class="Meteioritolvl2" id="Meteiorito3lvl2" alt="Meteorito">
-<img src="IMG/Metiorito.svg" class="Meteioritolvl2" id="Meteiorito4lvl2" alt="Meteorito">
-<img src="IMG/Metiorito.svg" class="Meteioritolvl2" id="Meteiorito5lvl2" alt="Meteorito">
 <img src="IMG/planeta_tierra.svg" class="Planetalvl2" alt="Tierra">
 <div class="Limitelvl2"></div>
 <div class="Startlvl2" id="Startlvl2">
 <h1 class="Texolvl2" id="Texolvl2">¿LISTO PARA SALVAR<br>EL MUNDO?<br>NIVEL 2</h1>
 <div id="Dificultadlvl2" class="dificultad-cosmica"><span class="Dificultad_emblema">✧</span><div><small>CLASIFICACIÓN DE MISIÓN</small><h1>DOMINIO GALÁCTICO</h1></div><span class="Dificultad_emblema">✧</span></div>
+<p class="Consejo_nivel">🛡 METEORITOS BLINDADOS (2 IMPACTOS) · ZIGZAG Y DIAGONALES · ¡MÁS RÁPIDO QUE EL NIVEL 1!</p>
 <button type="button" class="Playlvl2" id="Playlvl2" onclick="window.iniciarNivel2 && window.iniciarNivel2()">JUGAR</button>
 <div id="Contenedor_contadorlvl2"><span id="RGBlvl2"></span></div>
 </div>
 <div class="Pausa_Pantallalvl2" id="Pausa_Pantallalvl2"><h1 class="Mensaje_Pauselvl2">JUEGO EN PAUSA</h1></div>
-<div class="GanastePantallaLvL2" id="GanastePantallaLvL2"><h1>¡NIVEL 2 COMPLETADO!</h1><h3>Has destruido los 5 meteoritos. Prepárate para el Nivel 3.</h3></div>
+<div class="GanastePantallaLvL2" id="GanastePantallaLvL2"><h1>¡NIVEL 2 COMPLETADO!</h1><h3>Has destruido los 10 meteoritos. Prepárate para el jefe final del Nivel 3.</h3></div>
 </div>
 </section>
 
 <section id="NIVEL3">
 <div class="Cabezeralvl3">
 <div class="Tiempolvl3"><h3>TIEMPO</h3><span id="Tiempolvl3">50</span></div>
-<div class="Puntajelvl3"><h3>PUNTAJE</h3><span id="Puntajelvl3">0 / 5</span></div>
+<div class="Puntajelvl3"><h3>PUNTAJE</h3><span id="Puntajelvl3">0 / 10</span></div>
 <div class="Pauselvl3" id="Pauselvl3"><h3>PAUSAR / CONTINUAR</h3></div><div class="Reiniciarlvl3" id="Reiniciarlvl3"><h3>REINICIAR</h3></div>
 </div>
 <div class="Contenedorlvl3">
-<img src="IMG/Metiorito.svg" class="Meteoritolvl3" id="Meteoritolvl3" alt="Meteorito">
-<img src="IMG/Metiorito.svg" class="Meteoritolvl3" id="Meteorito2lvl3" alt="Meteorito">
-<img src="IMG/Metiorito.svg" class="Meteoritolvl3" id="Meteorito3lvl3" alt="Meteorito">
-<img src="IMG/Metiorito.svg" class="Meteoritolvl3" id="Meteorito4lvl3" alt="Meteorito">
-<img src="IMG/Metiorito.svg" class="Meteoritolvl3" id="Meteorito5lvl3" alt="Meteorito">
 <img src="IMG/planeta_tierra.svg" class="Planetalvl3" alt="Tierra">
 <div class="Limitelvl3"></div>
 <div class="Startlvl3" id="Startlvl3">
 <h1 class="Textolvl3" id="Textolvl3">¿LISTO PARA SALVAR<br>EL MUNDO?<br>NIVEL 3</h1>
+<p class="Consejo_nivel">👾 LA NODRIZA CARGA LÁSERES: ¡HAZ CLIC SOBRE ELLA PARA INTERRUMPIRLOS! CADA METEORITO ROMPE SU ESCUDO.</p>
 <button type="button" class="Playlvl3" id="Playlvl3" onclick="window.iniciarNivel3 && window.iniciarNivel3()">JUGAR</button>
 <div class="Dificultadlvl3 dificultad-cosmica" id="Dificultadlvl3"><span class="Dificultad_emblema">✹</span><div><small>CLASIFICACIÓN DE MISIÓN</small><h1>TRONO DEL COSMOS</h1></div><span class="Dificultad_emblema">✹</span></div>
 <div id="Contenedor_contadorlvl3"><span id="RGBlvl3"></span></div>
@@ -131,7 +119,7 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 <div class="Pantalla_navelvl3" id="Pantalla_Ovnislvl3" aria-hidden="true"></div>
 <div class="Pantalla_Nodrizalvl3" id="Pantalla_Nodrizalvl3" aria-hidden="true"></div>
 <div class="Pantalla_nave2lvl3" id="Pantalla_Ovnis2lvl3" aria-hidden="true"></div>
-<div id="Pantalla_creditoslvl3" aria-hidden="true"><div class="EscenaFinalCosmica"><div class="FinalCosmicoEtiqueta">✦ NIVEL 03 · COMPLETADO ✦</div><div class="PortalCosmico"><span>✦</span><i></i></div><div class="FinalCosmicoTexto"><span>VICTORIA GALÁCTICA</span><h2>¡ERES UNA LEYENDA!</h2><p>Has conquistado los tres sectores.<br>Tu historia ya forma parte del cosmos.</p><div class="FinalCosmicoLogros"><span>✧ 3/3 SECTORES</span><span>☄ 5/5 METEORITOS</span></div></div><div class="FinalCosmicoFirma">LA GALAXIA TE RECORDARÁ <span>✦</span></div></div></div>
+<div id="Pantalla_creditoslvl3" aria-hidden="true"><div class="EscenaFinalCosmica"><div class="FinalCosmicoEtiqueta">✦ NIVEL 03 · COMPLETADO ✦</div><div class="PortalCosmico"><span>✦</span><i></i></div><div class="FinalCosmicoTexto"><span>VICTORIA GALÁCTICA</span><h2>¡ERES UNA LEYENDA!</h2><p>Has conquistado los tres sectores.<br>Tu historia ya forma parte del cosmos.</p><div class="FinalCosmicoLogros"><span>✧ 3/3 SECTORES</span><span>☄ 10/10 METEORITOS</span><span>👾 NODRIZA DERROTADA</span></div></div><div class="FinalCosmicoFirma">LA GALAXIA TE RECORDARÁ <span>✦</span></div></div></div>
 <div id="Creditoslvl3"><h3>CRÉDITOS<br><span>GRUPO 3 “LOS DIBUJITOS”</span></h3></div>
 <div id="Proximolvl3"><h4>PRÓXIMAMENTE</h4><h4>IRON FIST 2</h4></div>
 <div class="Pausa_Pantallalvl3" id="Pausa_Pantallalvl3"><h1 class="Mensaje_Pauselvl3">JUEGO EN PAUSA</h1></div>
@@ -141,6 +129,7 @@ En cierto día, las noticias de todo el mundo anunciaron que muy pronto se acerc
 
 <div class="NEXT" id="NEXT" style="display:none" aria-hidden="true"><h2>SIGUIENTE NIVEL <i class="fas fa-arrow-right"></i></h2></div>
 </section>
+<script src="Motor.js"></script>
 <script src="Ejecucion2.js"></script>
 <script src="Ejecucion3.js"></script>
 <script src="JavaScript.js"></script>

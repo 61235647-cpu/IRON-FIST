@@ -1,28 +1,39 @@
-/* IRON FIST — Nivel 2 */
+/* IRON FIST — Nivel 2: DOMINIO GALÁCTICO
+   10 meteoritos, 3 vidas. Aparecen cometas rápidos, meteoritos en onda,
+   diagonales y blindados que necesitan 2 impactos. */
 (() => {
 "use strict";
-const $=id=>document.getElementById(id),play=id=>{if(id==="Fondo_Ciberpunk"){window.ironFistSpaceMusic?.start();return;}const a=$(id);if(a)a.play().catch(()=>{});},pause=id=>{if(id==="Fondo_Ciberpunk"){window.ironFistSpaceMusic?.pause();return;}$(id)?.pause()};
-const ids=["Meteioritolvl2","Meteiorito2lvl2","Meteiorito3lvl2","Meteiorito4lvl2","Meteiorito5lvl2"];
-let s={tiempo:60,puntos:0,jugando:false,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};
-let cuentaTimer=null,cuentaFinal=null,cuentaActiva=false;
-function cancelarCuenta(){if(cuentaTimer)clearInterval(cuentaTimer);if(cuentaFinal)clearTimeout(cuentaFinal);cuentaTimer=null;cuentaFinal=null;cuentaActiva=false;const box=$("Contenedor_contadorlvl2");if(box)box.style.display="none";const btn=$("Playlvl2");if(btn)btn.disabled=false;}
-function hud(){if($("Tiempolvl2"))$("Tiempolvl2").textContent=s.tiempo;if($("Puntajelvl2"))$("Puntajelvl2").textContent=s.puntos+" / 5";const p=$("Puntajelvl2")?.parentElement?.querySelector(".ProgresoInternoLvl2");if(p)p.style.width=(s.puntos/5*100)+"%";}
-function barra(){const box=$("Puntajelvl2");if(box&&!box.querySelector(".BarraProgresoLvl2")){const b=document.createElement("div");b.className="BarraProgresoLvl2";b.innerHTML='<div class="ProgresoInternoLvl2"></div>';box.style.position="relative";box.appendChild(b);}}
-function ocultar(e){if(e){e.style.transition="none";e.style.opacity="0";e.style.visibility="hidden";e.style.left="-12%";e.dataset.tocado="0";}}
-function lanzar(e,delay=0){if(!e)return;setTimeout(()=>{if(!s.jugando||s.pausado||s.terminado||s.reiniciando)return;e.dataset.tocado="0";e.style.top=Math.max(7,Math.random()*78)+"%";e.style.left="-12%";e.style.transition="none";e.style.opacity="1";e.style.visibility="visible";requestAnimationFrame(()=>{e.style.transition="left 3.1s linear";e.style.left="100%";});},delay);}
-function congelarMeteoritos(ids){ids.forEach(id=>{const e=$(id);if(!e||e.dataset.tocado==="1")return;e.getAnimations().forEach(a=>a.pause());});}
-function reanudarMeteoritos(ids){ids.forEach(id=>{const e=$(id);if(!e||e.dataset.tocado==="1")return;e.getAnimations().forEach(a=>a.play());});}
-function iniciarMeteoritos(){ids.forEach((id,i)=>{const e=$(id);if(e){ocultar(e);lanzar(e,i*850);}});}
-function detener(){ids.forEach(id=>{const e=$(id);if(e)e.dataset.tocado="1";});}
-function perderNivel2(m){if(!s.jugando||s.terminado||s.reiniciando)return;s.reiniciando=true;s.pausado=true;s.tiempo=60;s.puntos=0;hud();ids.forEach(id=>ocultar($(id)));play("Perdiste_sound");if(window.Swal)Swal.fire({title:"¡Defensa fallida!",text:m+" La ronda se reiniciará.",icon:"warning",confirmButtonText:"Continuar",background:"#07101c",color:"#fff"});setTimeout(()=>{if(s.jugando&&!s.terminado){s.reiniciando=false;s.pausado=false;iniciarMeteoritos();}},900);}
-function ganar(){s.terminado=true;s.jugando=false;clearInterval(s.timer);clearInterval(s.impact);detener();ids.forEach(id=>ocultar($(id)));pause("Fondo_Ciberpunk");play("Triunfo");$("GanastePantallaLvL2").style.display="flex";$("NEXT").style.display="block";$("NEXT").style.pointerEvents="auto";$("NEXT").style.zIndex="99999";$("NEXT").setAttribute("aria-hidden","false");}
-function golpe(id){if(!s.jugando||s.pausado||s.terminado||s.reiniciando)return;const e=$(id);if(!e||e.dataset.tocado==="1")return;e.dataset.tocado="1";s.puntos++;hud();play(id===ids[0]?"Puntos_sound":id===ids[1]?"Punto2":"Punto3");ocultar(e);setTimeout(()=>{if(s.jugando&&!s.terminado)lanzar(e);},450);if(s.puntos>=5)ganar();}
-function iniciar(){s={tiempo:60,puntos:0,jugando:true,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};hud();$("Startlvl2").style.display="none";$("Pausa_Pantallalvl2").style.display="none";$("GanastePantallaLvL2").style.display="none";play("Fondo_Ciberpunk");iniciarMeteoritos();s.timer=setInterval(()=>{if(!s.pausado&&s.jugando){s.tiempo--;hud();if(s.tiempo<=0)perderNivel2("Se agotó el tiempo.")}},1000);s.impact=setInterval(()=>{if(s.pausado||s.reiniciando||!s.jugando||s.terminado)return;const linea=$("NIVEL_02")?.querySelector(".Limitelvl2");if(!linea)return;const x=linea.getBoundingClientRect().left;for(const id of ids){const e=$(id);if(!e||e.dataset.tocado==="1"||getComputedStyle(e).visibility==="hidden"||Number(getComputedStyle(e).opacity)===0)continue;const r=e.getBoundingClientRect();if(r.left+r.width*0.5>=x){perderNivel2("Un meteorito llegó a la línea de impacto.");return;}}},40);}
-function pausa(){if(!s.jugando||s.terminado)return;s.pausado=!s.pausado;$("Pausa_Pantallalvl2").style.display=s.pausado?"flex":"none";if(s.pausado){congelarMeteoritos(ids);pause("Fondo_Ciberpunk");}else{reanudarMeteoritos(ids);play("Fondo_Ciberpunk");}}
-function reiniciar(){cancelarCuenta();clearInterval(s.timer);clearInterval(s.impact);s={tiempo:60,puntos:0,jugando:false,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};hud();ids.forEach(id=>ocultar($(id)));$("Pausa_Pantallalvl2").style.display="none";$("GanastePantallaLvL2").style.display="none";$("Startlvl2").style.display="flex";pause("Fondo_Ciberpunk");}
-function cuenta(){if(cuentaActiva)return;const box=$("Contenedor_contadorlvl2"),sp=$("RGBlvl2"),btn=$("Playlvl2");if(!box||!sp)return;cuentaActiva=true;if(btn)btn.disabled=true;let n=3;box.style.display="block";sp.textContent=n;cuentaTimer=setInterval(()=>{n--;sp.textContent=n>0?n:"¡YA!";if(n<=0){clearInterval(cuentaTimer);cuentaTimer=null;cuentaFinal=setTimeout(()=>{if(!cuentaActiva)return;box.style.display="none";cuentaActiva=false;cuentaFinal=null;if(btn)btn.disabled=false;iniciar();},350);}},800);}
-window.jugarNivel2=cuenta;window.iniciarNivel2=()=>{cancelarCuenta();iniciar();};window.nivel2Terminado=()=>s.terminado;
-window.prepararNivel2=()=>{cancelarCuenta();s={tiempo:60,puntos:0,jugando:false,pausado:false,terminado:false,reiniciando:false,timer:null,impact:null};hud();$("Startlvl2").style.display="flex";$("GanastePantallaLvL2").style.display="none";ids.forEach(id=>ocultar($(id)));};
-function inicializarNivel2(){barra();hud();ids.forEach(id=>{const e=$(id);if(!e)return;e.addEventListener("pointerdown",()=>golpe(id));e.addEventListener("transitionend",ev=>{if(ev.propertyName==="left"&&s.jugando&&!s.pausado&&!s.terminado&&!s.reiniciando&&e.dataset.tocado!=="1"&&getComputedStyle(e).visibility!=="hidden"&&Number(getComputedStyle(e).opacity)>0){perderNivel2("Un meteorito llegó al final de su recorrido.");}});});window.jugarNivel2=cuenta;$("Pauselvl2")?.addEventListener("click",pausa);$("Reiniciarlvl2")?.addEventListener("click",reiniciar);}
-if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",inicializarNivel2,{once:true});else inicializarNivel2();
+const IF = window.IronFist;
+let nivel2 = null;
+
+function inicializarNivel2() {
+  nivel2 = IF.crearNivelMeteoritos({
+    raiz: "NIVEL_02", contenedor: ".Contenedorlvl2", limite: ".Limitelvl2", planeta: ".Planetalvl2", clase: "Meteioritolvl2",
+    ids: { tiempo: "Tiempolvl2", puntaje: "Puntajelvl2", pausa: "Pauselvl2", reiniciar: "Reiniciarlvl2", inicio: "Startlvl2", pausaPantalla: "Pausa_Pantallalvl2", gana: "GanastePantallaLvL2" },
+    barra: ["BarraProgresoLvl2", "ProgresoInternoLvl2"],
+    objetivo: 10, tiempo: 34, vidas: 3, yMin: 6, yMax: 80, factorRapido: 1.35,
+    sonidos: ["Puntos_sound", "Punto2", "Punto3", "Punto4"],
+    velocidad: p => IF.lerp(38, 50, p),
+    maxSim: p => Math.round(IF.lerp(4, 6, p)),
+    intervalo: p => IF.lerp(0.8, 0.45, p),
+    elegirTipo: (p, s) => {
+      if (s.spawns < 2) return "normal";
+      const r = Math.random();
+      if (r < 0.14) return "blindado";
+      if (r < 0.34) return "rapido";
+      if (r < 0.58) return "onda";
+      if (r < 0.78) return "diagonal";
+      return "normal";
+    },
+    textos: { ganaTitulo: "¡Nivel 2 completado!", ganaTexto: "Has destruido los 10 meteoritos. Prepárate para el jefe final del Nivel 3." }
+  });
+}
+
+window.iniciarNivel2 = () => nivel2 && nivel2.iniciar();
+window.jugarNivel2 = window.iniciarNivel2;
+window.nivel2Terminado = () => !!nivel2 && nivel2.terminado();
+window.prepararNivel2 = () => nivel2 && nivel2.reiniciar();
+
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", inicializarNivel2, { once: true });
+else inicializarNivel2();
 })();

@@ -663,3 +663,55 @@ body{
 #NEXT{display:none;}
 .Play,.Playlvl2,.Playlvl3{font-family:inherit;border:0;appearance:none;-webkit-appearance:none;}
 .Play:focus-visible,.Playlvl2:focus-visible,.Playlvl3:focus-visible{outline:3px solid #9dfcff;outline-offset:3px;}
+
+/* ===== MOTOR DE JUEGO: vidas, combos, efectos láser y jefe final ===== */
+.Contenedor,.Contenedorlvl2,.Contenedorlvl3{touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.HUD_vidas{position:absolute;left:12px;top:10px;z-index:7;display:none;gap:5px;pointer-events:none;font-size:clamp(16px,2.6vw,24px);filter:drop-shadow(0 0 7px rgba(255,80,120,.8))}
+.HUD_vidas span{color:#ff5a7a;transition:transform .25s,opacity .25s,filter .25s}
+.HUD_vidas .perdida{opacity:.2;filter:grayscale(1);transform:scale(.75)}
+.HUD_combo{position:absolute;left:50%;top:46px;transform:translateX(-50%);z-index:7;display:none;pointer-events:none;font-family:"Press Start 2P",monospace;font-size:clamp(10px,1.6vw,16px);color:#ffe27a;text-shadow:0 0 12px #ff9d32,0 0 26px #ff5a6e;white-space:nowrap}
+.HUD_combo.pop{animation:comboPop .35s ease-out}
+@keyframes comboPop{0%{transform:translateX(-50%) scale(1.8)}100%{transform:translateX(-50%) scale(1)}}
+.Urgente{color:#ff6b6b!important;animation:parpadeo .7s steps(2) infinite}
+@keyframes parpadeo{50%{opacity:.45}}
+.Consejo_nivel{font-family:"Press Start 2P",monospace;font-size:clamp(7px,.95vw,10px);line-height:1.9;color:#e0d2ff;max-width:min(560px,90%);margin:6px auto 10px;text-shadow:0 0 8px rgba(139,92,246,.7);text-align:center}
+@media(max-height:520px){.Consejo_nivel{display:none}}
+
+/* Efectos */
+.Fx_laser{position:absolute;height:4px;transform-origin:0 50%;z-index:6;pointer-events:none;border-radius:4px;background:linear-gradient(90deg,transparent,#fff 18%,var(--fx,#7ee8ff));box-shadow:0 0 10px var(--fx,#7ee8ff),0 0 22px #8b5cf6;animation:fxLaser .26s ease-out forwards}
+@keyframes fxLaser{0%{opacity:1}100%{opacity:0}}
+.Fx_onda{position:absolute;z-index:6;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;border:3px solid var(--fx,#ffb347);box-shadow:0 0 14px var(--fx,#ffb347);pointer-events:none;animation:fxOnda .55s ease-out forwards}
+@keyframes fxOnda{to{transform:scale(calc(4 * var(--esc,1)));opacity:0}}
+.Fx_particula{position:absolute;z-index:6;width:7px;height:7px;margin:-3px 0 0 -3px;border-radius:50%;background:var(--fx,#ffb347);box-shadow:0 0 8px var(--fx,#ffb347);pointer-events:none;animation:fxParticula .62s ease-out forwards}
+@keyframes fxParticula{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+.Fx_texto{position:absolute;z-index:8;transform:translate(-50%,-50%);pointer-events:none;font-family:"Press Start 2P",monospace;font-size:clamp(8px,1.3vw,13px);color:var(--fx,#fff);text-shadow:0 0 10px var(--fx,#fff),0 2px 0 #000;white-space:nowrap;animation:fxTexto 1.05s ease-out forwards}
+@keyframes fxTexto{0%{opacity:0;transform:translate(-50%,-30%) scale(.7)}15%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}100%{opacity:0;transform:translate(-50%,-150%) scale(1)}}
+.Fx_destello{position:absolute;inset:0;z-index:9;pointer-events:none;background:radial-gradient(circle,transparent 30%,var(--fx,rgba(255,40,80,.42)));animation:fxDestello .55s ease-out forwards}
+@keyframes fxDestello{from{opacity:1}to{opacity:0}}
+.Temblor{animation:temblor .4s linear}
+@keyframes temblor{0%,100%{transform:translate(0,0)}15%{transform:translate(-7px,3px)}30%{transform:translate(6px,-4px)}45%{transform:translate(-5px,-3px)}60%{transform:translate(5px,4px)}75%{transform:translate(-3px,2px)}}
+
+/* Nodriza (jefe del Nivel 3) */
+.Jefe{position:absolute;left:8px;top:50%;width:clamp(84px,13vw,125px);transform:translateY(-50%);z-index:3;pointer-events:none}
+.Jefe img{width:100%;height:auto;display:block;-webkit-user-drag:none;filter:drop-shadow(0 0 14px rgba(156,124,255,.9));animation:jefeFlota 2.2s ease-in-out infinite}
+@keyframes jefeFlota{0%,100%{transform:translateX(0) scale(1)}50%{transform:translateX(8px) scale(1.04)}}
+.Jefe.furia img{filter:drop-shadow(0 0 16px #ff4d8d) hue-rotate(-50deg) saturate(1.6)}
+.Jefe.cargando{pointer-events:auto;cursor:crosshair}
+.Jefe.cargando img{animation:jefeCarga .22s linear infinite;filter:drop-shadow(0 0 22px #ff2d55) brightness(1.5) hue-rotate(-60deg) saturate(2)}
+@keyframes jefeCarga{0%,100%{transform:translateX(-3px) scale(1.12)}50%{transform:translateX(3px) scale(1.2)}}
+.Jefe.aturdido img{animation:jefeAturdido .25s linear infinite;filter:grayscale(.8) brightness(.8) drop-shadow(0 0 12px #7ee8ff)}
+@keyframes jefeAturdido{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+.Jefe.golpeado img{filter:brightness(2.2) drop-shadow(0 0 20px #fff)}
+.Jefe.muriendo img{animation:jefeMuere 2.1s ease-in forwards;filter:brightness(2) drop-shadow(0 0 28px #ffd43b)}
+@keyframes jefeMuere{0%{transform:scale(1)}60%{transform:scale(1.25) rotate(8deg);opacity:1}100%{transform:scale(1.7) rotate(-10deg);opacity:0}}
+.Jefe_alerta{position:absolute;left:100%;top:50%;transform:translateY(-50%);margin-left:10px;white-space:nowrap;font-family:"Press Start 2P",monospace;font-size:clamp(7px,1vw,10px);color:#fff;background:rgba(255,45,85,.88);padding:5px 8px;border-radius:6px;display:none;box-shadow:0 0 14px rgba(255,45,85,.8)}
+.Jefe.cargando .Jefe_alerta{display:block;animation:parpadeo .3s steps(2) infinite}
+.Jefe_telegrafo{position:absolute;left:8%;right:0;height:0;transform:translateY(-50%);z-index:3;pointer-events:none;border-top:3px dashed transparent;opacity:0}
+.Jefe_telegrafo.on{opacity:1;border-top-color:rgba(255,60,100,.95);filter:drop-shadow(0 0 8px #ff3d6a);animation:parpadeo .24s steps(2) infinite}
+.Jefe_telegrafo.on::after{content:"⚠";position:absolute;right:19%;top:-18px;font-size:22px;color:#ffd43b;text-shadow:0 0 10px #ff3d6a}
+.Jefe_rayo{position:absolute;left:6%;right:0;height:46px;transform:translateY(-50%) scaleY(.1);z-index:3;pointer-events:none;opacity:0;border-radius:30px;background:linear-gradient(180deg,transparent,#ff7ab8 20%,#fff 50%,#ff7ab8 80%,transparent);box-shadow:0 0 26px #ff2d7a,0 0 60px #ff2d7a}
+.Jefe_rayo.on{opacity:1;animation:rayoDispara .6s ease-out forwards}
+@keyframes rayoDispara{0%{transform:translateY(-50%) scaleY(.15);opacity:1}15%{transform:translateY(-50%) scaleY(1.15)}100%{transform:translateY(-50%) scaleY(.5);opacity:0}}
+.Jefe_hp{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:min(300px,42%);z-index:7;pointer-events:none;text-align:center;font-family:"Press Start 2P",monospace;font-size:clamp(6px,.85vw,9px);color:#f3e9ff;text-shadow:0 0 8px #8b5cf6}
+.Jefe_hp div{margin-top:5px;height:10px;border:2px solid rgba(255,255,255,.7);border-radius:8px;overflow:hidden;background:rgba(0,0,0,.55);box-shadow:0 0 12px rgba(139,92,246,.7)}
+.Jefe_hp i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ff3d6a,#ffb347);transition:width .25s}
