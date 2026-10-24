@@ -125,6 +125,7 @@ function ocultarFinal() {
   ["Pantalla_Ovnislvl3", "Pantalla_Nodrizalvl3", "Pantalla_Ovnis2lvl3", "Pantalla_creditoslvl3", "Creditoslvl3", "Proximolvl3"]
     .forEach(id => { const e = $(id); if (e) e.style.display = "none"; });
   IF.pause("Musica_Final");
+  const x = $("Extra_titan"); if (x) x.style.display = "none";
 }
 function alIniciar(api) {
   apiRef = api;
@@ -142,6 +143,7 @@ function mostrarCreditos(api) {
   $("Pantalla_creditoslvl3").style.display = "block";
   $("Creditoslvl3").style.display = "block";
   $("Proximolvl3").style.display = "block";
+  const x = $("Extra_titan"); if (x) x.style.display = "block";
   api.play("Musica_Final");
   api.avisar({
     title: "¡MISIÓN COMPLETADA!",
