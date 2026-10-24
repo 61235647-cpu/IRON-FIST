@@ -99,9 +99,8 @@ function avanzarNivelSeguro(){
   window.prepararNivel2?.();return;
  }
  if(b.style.display!=="none" && window.nivel2Terminado?.()){
-  b.style.display="none";c.style.display="flex";
-  n.style.display="none";n.style.pointerEvents="none";
-  window.prepararNivel3?.();
+  n.style.display="none";n.style.pointerEvents="none";n.setAttribute("aria-hidden","true");
+  window.location.href="nivel3-titan.html";
  }
 }
 window.avanzarNivelSeguro=avanzarNivelSeguro;
